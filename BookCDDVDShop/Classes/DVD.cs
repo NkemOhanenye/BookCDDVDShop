@@ -93,8 +93,8 @@ namespace BookCDDVDShop.Classes
         {
             base.Save(f);
             hiddenLeadActor = f.txtDVDLeadActor.Text;
-            hiddenReleaseDate = f.txtDVDReleaseDate.Text;
-            hiddenRuntime = f.txtDVDRunTime.Text;
+            hiddenReleaseDate = Convert.ToDateTime(f.txtDVDReleaseDate.Text);
+            hiddenRuntime = Convert.ToInt32(f.txtDVDRunTime.Text);
         } // end Save
 
           
