@@ -37,7 +37,7 @@ namespace BookCDDVDShop.Classes
 
         // Parameterized Constructor
         public CDClassical(int UPC, decimal price, string title, int quantity,
-            string label, string artists) : base(UPC, price, title, quantity)
+            string label, string artists) : base(UPC, price, title, quantity)    //uses the base class Product's parameterized constructor
         {
             hiddenLabel = "";
             hiddenArtists = "";
@@ -71,7 +71,10 @@ namespace BookCDDVDShop.Classes
             }  // end get
         }  // end Property
 
+
         // Save data from form to object
+        // base.Save(f) will save the data that is inherited from the Product class; 
+        // the override will additionally save data unique to CDClassical objects
         public override void Save(frmBookCDDVDShop f)
         {
             base.Save(f);
@@ -89,13 +92,12 @@ namespace BookCDDVDShop.Classes
         }  // end Display
 
 
-        // This toString function overrides the Object toString
-        //     function.  The base refers to Object because this class
-        //     inherits Object by default.
+        // This toString function overrides the Product toString fuction
+        // The base refers to Product because this class inherits Produt by default.
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "CDClassical Info: " + hiddenArtists + hiddenArtists;
+            s += "CDClassical Label: " + hiddenLabel + "\nCDClassical Artists: " + hiddenArtists;
             return s;
         }  // end ToString
 

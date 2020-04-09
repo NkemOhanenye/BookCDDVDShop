@@ -16,6 +16,8 @@ using BookCDDVDShop;
 using System.IO;
 // To serialize a persistant object
 using System.Runtime.Serialization.Formatters.Binary;
+using BookCDDVDShop.Classes;
+
 
 namespace BookCDDVDShop.Classes
 {

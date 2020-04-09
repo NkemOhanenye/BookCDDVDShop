@@ -16,8 +16,9 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
+using BookCDDVDShop.Classes;
 
-namespace BookCDDVDShop.Classes
+namespace BookCDDVDShop
 {
     class FormController
     {

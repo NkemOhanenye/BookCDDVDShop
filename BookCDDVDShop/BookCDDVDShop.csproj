@@ -52,12 +52,19 @@
     <Compile Include="BookCDDVDShop.Designer.cs">
       <DependentUpon>BookCDDVDShop.cs</DependentUpon>
     </Compile>
+    <Compile Include="Classes\Book.cs" />
+    <Compile Include="Classes\BookCIS.cs" />
     <Compile Include="Classes\CDChamber.cs" />
     <Compile Include="Classes\CDClassical.cs" />
-    <Compile Include="Classes\FormController.cs" />
+    <Compile Include="Classes\CDOrchestra.cs" />
+    <Compile Include="Classes\DVD.cs" />
+    <Compile Include="Classes\ProductDB.cs" />
+    <Compile Include="Classes\ProductList.cs" />
+    <Compile Include="FormController.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\SFManager.cs" />
-    <Compile Include="Classes\Validators.cs" />
+    <Compile Include="Globals.cs" />
+    <Compile Include="Validators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="BookCDDVDShop.resx">

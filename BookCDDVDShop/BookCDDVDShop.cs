@@ -128,5 +128,6 @@ namespace BookCDDVDShop
         {
             FormController.clear(this);
         }  // end btnClear_Click
+
     } // end Form class
 } // end namespace

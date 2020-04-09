@@ -14,7 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-// For serializati
+// For serialization
 using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BookCDDVDShop.Classes
@@ -40,10 +40,7 @@ namespace BookCDDVDShop.Classes
         }  // end parameterized constructor
 
 
-
-        // These six methods replace what were VB Properties
-        // get or set an item in the List
-        // Accessor/mutator for Tuition, Year and Credits
+        // These methods serve as accessor/mutator for InstrumentList
         public string getCDChamberInstrumentList()
         {
             return hiddenInstrumentList;
@@ -73,9 +70,8 @@ namespace BookCDDVDShop.Classes
         }  // end Display
 
 
-        // This toString function overrides the Student toString
-        // function.  The base refers to the Student because this class
-        // inherits Student by definition.
+        // This toString function overrides the CDClassical toString function
+        // The base refers to CDClassical because this class inherits CDClassical by definition 
         public override string ToString()
         {
             string s = base.ToString() + "\n";
