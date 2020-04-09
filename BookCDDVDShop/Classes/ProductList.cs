@@ -34,5 +34,7 @@ namespace BookCDDVDShop.Classes
             hiddenProductList.Add(p);
         }// end add method
 
+
+        // get the number of products in the list (?)
     }
 }
