@@ -6,6 +6,10 @@
 // Revised: June 27, 2018
 
 // This class contains "static" methods to handle required data validations for this Temple Owl project
+//
+// Last Modified by: Nkem Ohanenye, Tracy Lan
+//
+// Date: April 14, 2020
 
 using System;
 using System.Collections.Generic;
@@ -59,6 +63,12 @@ namespace BookCDDVDShop.Classes
                     "Regex Product UPC Error");
                 return false;
             }  // end Product UPC Regex test
+
+            if (Convert.ToInt32(UPC) <= 0)
+            {
+                MessageBox.Show("Product UPC was less than 0. Re-enter.", "Product UPC Error");
+                return false;
+            }
             return true;   // Passed all tests
         }  // end Validate ProductUPC
 
@@ -96,14 +106,6 @@ namespace BookCDDVDShop.Classes
                 MessageBox.Show("Product title was blank. Re-enter.", "Product title Error");
                 return false;
             }
-
-            // using Regex to validate the Product title text box to not contain digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(title, @"^[0-9]"))
-            {
-                MessageBox.Show("Product title can't contain digits. Reenter.",
-                    "Regex Product title Error");
-                return false;
-            } // end Product title Regex test
             return true; // Passed all tests
         } // end Validate ProductTitle
 
@@ -161,6 +163,12 @@ namespace BookCDDVDShop.Classes
                     "Regex Book ISBN Error");
                 return false;
             } // end Book ISBN Regex tests
+
+            /*if (ISBNLeft[0] == '0' || ISBNRight[0] == '0')
+            {
+                MessageBox.Show("Book ISBN was began with a 0. Re-enter.", "Book ISBN Error");
+                return false;
+            }*/
             return true; // passed all tests
         } // end Validate BookISBN
 
@@ -174,13 +182,6 @@ namespace BookCDDVDShop.Classes
                 return false;
             }
 
-            // using Regex to validate if the author does not contain digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(author, @"^[0-9]"))
-            {
-                MessageBox.Show("Book author can't contain digits. Reenter.",
-                    "Regex Book author Error");
-                return false;
-            } // end Book author Regex test
             return true; // passed all tests
         } // end Validate BookuAuthor
 
@@ -251,13 +252,6 @@ namespace BookCDDVDShop.Classes
                 MessageBox.Show("DVD leadActor was blank. Re-enter.", "DVD leadActor Error");
                 return false;
             }
-            // using Regex to validate if the leadActor does not contain digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(leadActor, @"^[0-9]"))
-            {
-                MessageBox.Show("DVD leadActor can't contain digits. Reenter.",
-                    "Regex DVD leadActor Error");
-                return false;
-            } // end Product title Regex test
             return true; // passed all tests
         } // end Validate DVDLeadActor
 
@@ -332,14 +326,6 @@ namespace BookCDDVDShop.Classes
                 MessageBox.Show("CDClassical label was blank. Re-enter.", "CDClassical label Error");
                 return false;
             }
-
-            // using Regex to validate that the label does not contain any digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(label, @"^[0-9]"))
-            {
-                MessageBox.Show("CDClassical label can't contain digits. Reenter.",
-                    "Regex CDClassical label Error");
-                return false;
-            } // end CDClassical label Regex test
             return true; // passed all tests
         } // end Validate CDClassicalLabel
 
@@ -395,14 +381,14 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateCDChamber
             (string instruments)
         {
-            if (ValidateCDChamberInstruments(instruments))
+            if (ValidateCDChamberInstrumentsList(instruments))
                 return true;
             else
                 return false;
         } // end Validate CDChamber
 
         // Valicate CDChamberInstruments
-        public static bool ValidateCDChamberInstruments
+        public static bool ValidateCDChamberInstrumentsList
             (string instruments) // IN: instruments list (seperated between commas)
         {
             if (instruments == "")

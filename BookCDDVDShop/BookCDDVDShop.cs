@@ -142,7 +142,7 @@ namespace BookCDDVDShop
                 btnDelete.Enabled = false;
                 btnEdit.Enabled = false;
                 // btnToString.Enabled = false;
-                lblUserMessage.Text = "Please select an operation";
+               // lblUserMessage.Text = "Please select an operation";
             }
             else if (i < 0 || i >= thisProductList.Count())
             {
@@ -153,9 +153,9 @@ namespace BookCDDVDShop
             {
                 currentIndex = i;
                 thisProductList.getAnItem(i).Display(this);
-                lblUserMessage.Text = "Object Type: " +
-                   thisProductList.getAnItem(i).GetType().ToString() +
-                   " List Index: " + i.ToString();
+               // lblUserMessage.Text = "Object Type: " +
+                 //  thisProductList.getAnItem(i).GetType().ToString() +
+                   //" List Index: " + i.ToString();
                 btnFind.Enabled = true;
                 btnDelete.Enabled = true;
                 btnEdit.Enabled = true;
@@ -286,43 +286,6 @@ namespace BookCDDVDShop
         } // end displayRelevantFormPart
 
 
-
-        // Validates the data for Products
-        private bool ValidateProduct()
-        {
-            if (Validators.ValidateProductUPC(txtProductUPC.Text) == false)
-            {
-                txtProductUPC.Text = "";
-                txtProductUPC.Focus();
-                MessageBox.Show("Product UPC not valid. Please check that all data is entered and valid.");
-                return false;
-            }  // end if
-            if (Validators.ValidateProductPrice(txtProductPrice.Text) == false)
-            {
-                txtProductPrice.Text = "";
-                txtProductPrice.Focus();
-                MessageBox.Show("Product Price not valid.  Please check that all data is entered and valid.");
-                return false;
-            }  // end if
-            if (Validators.ValidateProductTitle(txtProductTitle.Text) == false)
-            {
-                txtProductTitle.Text = "";
-                txtProductTitle.Focus();
-                MessageBox.Show("Product Title not valid.  Please check that all data is entered and valid.");
-                return false;
-            }  // end if
-            if (Validators.ValidateProductQuantity(txtProductQuantity.Text) == false)
-            {
-                txtProductQuantity.Text = "";
-                txtProductQuantity.Focus();
-                MessageBox.Show("Product Quantity not valid.  Please check that all data is entered and valid.");
-                return false;
-            }  // end if
-            return true;
-        }   // end Validate Product data
-
-
-
         // ****************************** Buttons for Creating Objects of our 5 Types *******************************************
 
         // need handlers for btnCreateBook, btnCreateBookCIS, btnCreateDVD, btnCreateCDOrchestra
@@ -341,7 +304,8 @@ namespace BookCDDVDShop
             }
             else
             {
-                if (ValidateProduct() == false) return;
+                if (Validators.ValidateProduct(txtProductUPC.Text, txtProductPrice.Text,
+                txtProductTitle.Text, txtProductQuantity.Text) == false) return;
                 // Look for duplicate boolean method
                 if (lookForDuplicate(Convert.ToInt32(txtProductUPC.Text)))
                 {
@@ -351,7 +315,7 @@ namespace BookCDDVDShop
                 }
                 // Save if data is OK
                 // if (ValidateProduct() == false) return;
-                if (Validators.ValidateCDChamberInstrumentList(txtCDChamberInstrumentList.Text) == false)
+                if (Validators.ValidateCDChamber(txtCDChamberInstrumentList.Text) == false)
                 {
                     txtCDChamberInstrumentList.Text = "";
                     txtCDChamberInstrumentList.Focus();
