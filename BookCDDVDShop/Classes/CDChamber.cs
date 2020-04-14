@@ -1,4 +1,13 @@
-﻿// CD Classical Chamber Music Class
+﻿/*
+ * Nkem Ohanenye, Tracy Lan
+ * CIS 3309 Section 001
+ * Date: 4/13/2020 (modified)
+ * BookCDDVDShop - CDChamber class
+ */
+
+
+
+// CD Classical Chamber Music Class
 // This is a node class (not inherited by any other class)
 // Responsible for all processing related to a CD Classical Chamber Music
 
@@ -40,18 +49,18 @@ namespace BookCDDVDShop.Classes
         }  // end parameterized constructor
 
 
-        // These methods serve as accessor/mutator for InstrumentList
-        public string getCDChamberInstrumentList()
+        // Accessor/mutator for InstrumentList
+        public string CDChamberInstrumentList
         {
-            return hiddenInstrumentList;
-        }  // end getgradHourlyPay
-
-
-        public void setCDChamberInstrumentList(string value)
-        {
-            hiddenInstrumentList = value;
-        }  // end get
-
+            get
+            {
+                return hiddenInstrumentList;
+            }  // end get
+            set   // (string value)
+            {
+                hiddenInstrumentList = value;
+            }  // end get
+        }  // end Property
 
 
         // Save data from form to object
@@ -79,5 +88,5 @@ namespace BookCDDVDShop.Classes
             return s;
         } //  end ToString
 
-    }  // end CDClChamber Class
+    }  // end CDChamber Class
 }  // end namespace

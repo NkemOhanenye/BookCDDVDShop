@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/8/2020
+ * Date: 4/13/2020
  * BookCDDVDShop - DVD class
  */
 
@@ -17,7 +17,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace BookCDDVDShop.Classes
 {
-    // inherits data and methods from the Product class and is serializable
+    // Inherits data and methods from the Product class and is serializable
     [Serializable()]
     class DVD : Product
     {
@@ -25,16 +25,16 @@ namespace BookCDDVDShop.Classes
         private DateTime hiddenReleaseDate;
         private int hiddenRuntime;
 
-        // parameterless constructor that sets the attributes as default values
+        // Parameterless constructor that sets the attributes as default values
         public DVD()
         {
             hiddenLeadActor = "";
-            hiddenReleaseDate = DateTime.Now;
+            hiddenReleaseDate = DateTime.Today;
             hiddenRuntime = 0;
         }// end parameterless constructor
 
 
-        // parameterized constructor sets attributes to input values
+        // Parameterized constructor sets attributes to input values
         public DVD(int UPC, decimal price, string title, int quantity,
             string actor, DateTime date, int runtime) : base(UPC, price, title, quantity)    //uses the base class Product's parameterized constructor
         {
@@ -44,7 +44,7 @@ namespace BookCDDVDShop.Classes
         }// end parameterized constructor
 
 
-        // accessor/mutator for LeadActor
+        // Accessor/mutator for LeadActor
         public string DVDLeadActor
         {
             get                                 // to access after creating a DVD object --> objectname.DVDLeadActor
@@ -58,7 +58,7 @@ namespace BookCDDVDShop.Classes
         }// end LeadActor property
 
         
-        // accessor/mutator for ReleaseDate
+        // Accessor/mutator for ReleaseDate
         public DateTime DVDReleaseDate
         {
             get
@@ -72,7 +72,7 @@ namespace BookCDDVDShop.Classes
         }// end ReleaseDate property
 
 
-        // accessor/mutator for Runtime
+        // Accessor/mutator for Runtime
         public int DVDRuntime
         {
             get
@@ -86,9 +86,9 @@ namespace BookCDDVDShop.Classes
         }// end Runtime property
 
 
-        // save data from form to object
+        // Save data from form to object
         // base.Save(f) will save the data that is inherited from the Product class 
-        // the override will additionally save data unique to DVD objects
+        // The override will additionally save data unique to DVD objects
         public override void Save(frmBookCDDVDShop f)
         {
             base.Save(f);
@@ -99,23 +99,25 @@ namespace BookCDDVDShop.Classes
 
           
 
-        // display data in object on form
+        // Display data in object on form
         public override void Display(frmBookCDDVDShop f)
         {
             base.Display(f);
             f.txtDVDLeadActor.Text = hiddenLeadActor;
-            f.txtDVDReleaseDate.Text = hiddenReleaseDate.ToString();
+            f.txtDVDReleaseDate.Text = hiddenReleaseDate.ToShortDateString();  // only displays month, day, year
             f.txtDVDRunTime.Text = hiddenRuntime.ToString();
         }  // end Display
 
 
-        // this toString method overrides the Product toString method
-        // the base refers to Product because this class inherits Produt by default
+        // This toString method overrides the Product toString method
+        // The base refers to Product because this class inherits Produt by default
         public override string ToString()
         {
             string s = base.ToString() + "\n";
             s += "DVD Lead Actor: " + hiddenLeadActor + "\nDVD Release Date: " + hiddenReleaseDate + "\nDVD Runtime: " + hiddenRuntime;
             return s;
         }  // end ToString
-    }
-}
+
+    }// end class DVD
+
+}// end namespace 
