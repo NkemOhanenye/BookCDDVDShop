@@ -1,7 +1,7 @@
 ﻿/*
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/8/2020
+ * Date: 4/13/2020
  * BookCDDVDShop - CDOrchestra class
  */
 
@@ -20,6 +20,62 @@ namespace BookCDDVDShop.Classes
     [Serializable()]
     class CDOrchestra : CDClassical
     {
+        private string hiddenConductor;
 
-    }
-}
+        // Parameterless Constructor
+        public CDOrchestra()
+        {
+            hiddenConductor = "";
+        }  // end Parameterless Constructor
+
+
+        // Parameterized constructor
+        public CDOrchestra(int UPC, decimal price, string title, int quantity,  
+            string label, string artists, string conductor) : base(UPC, price, title, quantity, label, artists)
+        {
+            hiddenConductor = conductor;
+        }  // end parameterized constructor
+
+
+        // Accessor/mutator for hiddenConductor
+        public string CDOrchestraConductor
+        {
+            get
+            {
+                return hiddenConductor;
+            }  // end get
+            set   // (string value)
+            {
+                hiddenConductor = value;
+            }  // end get
+        }  // end Property
+
+
+        // Save data from form to object
+        public override void Save(frmBookCDDVDShop f)
+        {
+            base.Save(f);
+            hiddenConductor = f.txtCDOrchestraConductor.Text;
+        }  // end Save
+
+
+        // Display data in object on form
+        public override void Display(frmBookCDDVDShop f)
+        {
+            base.Display(f);
+            f.txtCDChamberInstrumentList.Text = hiddenConductor;
+        }  // end Display
+
+
+        // This toString function overrides the CDClassical toString function
+        // The base refers to CDClassical because this class inherits CDClassical by definition 
+        public override string ToString()
+        {
+            string s = base.ToString() + "\n";
+            s += "Conductor:  " + hiddenConductor;
+            return s;
+        } //  end ToString
+
+    }  // end CDOrchestra Class
+}  // end namespace
+
