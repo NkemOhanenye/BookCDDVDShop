@@ -305,7 +305,15 @@ namespace BookCDDVDShop
             else
             {
                 if (Validators.ValidateProduct(txtProductUPC.Text, txtProductPrice.Text,
-                txtProductTitle.Text, txtProductQuantity.Text) == false) return;
+                txtProductTitle.Text, txtProductQuantity.Text) == false)
+                {
+                    txtProductUPC.Text = "";
+                    txtProductPrice.Text = "";
+                    txtProductTitle.Text = "";
+                    txtProductQuantity.Text = "";
+                    txtProductUPC.Focus();
+                    return;
+                }
                 // Look for duplicate boolean method
                 if (lookForDuplicate(Convert.ToInt32(txtProductUPC.Text)))
                 {
