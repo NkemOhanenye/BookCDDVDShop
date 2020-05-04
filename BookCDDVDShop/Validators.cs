@@ -91,7 +91,7 @@ namespace BookCDDVDShop.Classes
             // using Regex to validate the Product price text box to contain only digits and can only have 2 decimal points
             if (!System.Text.RegularExpressions.Regex.IsMatch(price, @"^[0-9]\d{0,2}(\.\d{1,2})?$"))
             {
-                MessageBox.Show("Product price must be all numbers. Reenter.",
+                MessageBox.Show("Product price must be all numbers and have 2 numbers after the decimal. Reenter.",
                     "Regex Product price Error");
                 return false;
             } // end Product price Regex test
