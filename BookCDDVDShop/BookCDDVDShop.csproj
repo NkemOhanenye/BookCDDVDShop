@@ -93,7 +93,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Debug\ProductDB.accdb">
+    <Content Include="bin\Debug\ProductDB.accdb">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
