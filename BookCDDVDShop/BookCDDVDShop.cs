@@ -1,7 +1,7 @@
 ﻿/*Modified by:
  * Nkem Ohanenye, Tracy Lan
  * CIS 3309 Section 001
- * Date: 4/13/2020
+ * Date: 5/4/2020
  * BookCDDVDShop - Main Form class
  */
 
@@ -16,6 +16,8 @@
 // Updated 06/18/2019 by Frank Friedman Ver 51
 
 // Manages all activities behind all controls on the Project form.
+//
+// Search Database base code was given by Wilson Diaz and reformatted to fix our code
 
 using System;
 using System.Collections.Generic;
@@ -732,6 +734,79 @@ namespace BookCDDVDShop
                 findAnItem(s);  // will call getItem which will display data on the form
                 txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
                 MessageBox.Show("The product with the given UPC is found.", "Product Found");
+            }
+            bool found; // boolean reference for search success
+            string pstring; // Product string updated upon product DB search call.
+            Product p;
+
+            //  this returns an OleDbDataReader object, but you don't really need to use it
+            //  the boolean flag and string that are returned are important
+            //  pstring will hold the attributes of a product from the database in a single string, separated by newline characters
+            //  split it below 
+
+            OleDbDataReader odb = dbFunctions.SelectProductFromProduct(Convert.ToInt32(txtProductUPC.Text), out found, out pstring);
+
+            if (!found) //not found
+            {
+                MessageBox.Show("Product not found");
+                txtProductUPC.Clear();
+                txtProductUPC.Focus();
+
+            } // Creates a new product to display in form.
+            else
+            {
+                string[] attributes = pstring.Split('\n'); // splits product attributes into array
+
+                for (int i = 0; i < attributes.Length; i++)
+                {
+                    attributes[i] = attributes[i].Trim('\r'); // clears "junk" from each field
+                }
+
+                string pType = attributes[4]; // gets the product type from this attribute and then creates new product to display in form
+
+                if (pType == "DVD")
+                {
+                    p = new DVD(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2], Convert.ToInt32(attributes[3]),
+                        attributes[5], DateTime.Parse(attributes[6]), Convert.ToInt32(attributes[7]));
+                    p.Display(this);
+                    txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                }
+                else if (pType == "Book")
+                {
+                    p = new Book(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
+                        Convert.ToInt32(attributes[3]), Convert.ToInt32(attributes[4]), Convert.ToInt32(attributes[5]),
+                        attributes[6], Convert.ToInt32(attributes[7]));
+                    p.Display(this);
+                    txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                }
+                else if (pType == "Book CIS")
+                {
+                    p = new BookCIS(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
+                        Convert.ToInt32(attributes[3]), Convert.ToInt32(attributes[4]), Convert.ToInt32(attributes[5]),
+                        attributes[6], Convert.ToInt32(attributes[7]), attributes[8]);
+                    p.Display(this);
+                    txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                }
+                else if (pType == "CD Chamber")
+                {
+                    p = new CDChamber(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
+                        Convert.ToInt32(attributes[3]), attributes[4], attributes[5], attributes[6]);
+                    p.Display(this);
+                    txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                }
+                else if (pType == "CD Orchestra")
+                {
+                    p = new CDOrchestra(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
+                        Convert.ToInt32(attributes[3]), attributes[4], attributes[5], attributes[6]);
+                    p.Display(this);
+                    txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                }
+                else
+                {
+                    MessageBox.Show("The product does not exist. Please enter another UPC.", "Product Not Found");
+                    txtProductUPC.Text = "";
+                    txtProductUPC.Focus();
+                }
             }
         }
 
