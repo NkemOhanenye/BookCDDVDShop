@@ -527,6 +527,7 @@ namespace BookCDDVDShop
                         MessageBoxButtons.OK);
                     txtBookISBNLeft.Text = "";
                     txtBookISBNRight.Text = "";
+                    txtBookISBNLeft.Focus();
                     return;
                 } // end inner if-then
 
@@ -600,6 +601,7 @@ namespace BookCDDVDShop
                         MessageBoxButtons.OK);
                     txtBookISBNLeft.Text = "";
                     txtBookISBNRight.Text = "";
+                    txtBookISBNLeft.Focus();
                     return;
                 }
                 if (Validators.ValidateCISBook(txtBookCISCISArea.Text) == false)
@@ -864,7 +866,9 @@ namespace BookCDDVDShop
                 {
                     txtProductUPC.Enabled = false;
                     MessageBox.Show("Clear the form and click button to enter a UPC.", "Clear and Re-enter UPC");
+                    btnSaveEditUpdate.Enabled = false;
                     btnClear.Focus();
+                    return;
                 }
                 else
                 {
@@ -939,9 +943,10 @@ namespace BookCDDVDShop
 
                 } // end outer else (when user confirms this is the product to be updated)
 
+                btnSaveEditUpdate.Enabled = true;
             }  // end if on success
 
-            btnSaveEditUpdate.Enabled = true;
+            
         }  // end btnEdit_Click
 
 
