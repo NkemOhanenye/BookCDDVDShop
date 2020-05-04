@@ -76,7 +76,7 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "BookCIS CIS Area: " + hiddenCISArea;
+            s += "BookCIS CIS Area:\t\t" + hiddenCISArea;
             return s;
         }  // end ToString
 

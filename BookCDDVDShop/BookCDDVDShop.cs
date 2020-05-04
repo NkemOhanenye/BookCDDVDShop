@@ -341,6 +341,7 @@ namespace BookCDDVDShop
                 {
                     MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
                         MessageBoxButtons.OK);
+                    txtProductUPC.Text = "";
                     return;
                 }
                 // Save if data is OK
@@ -410,6 +411,7 @@ namespace BookCDDVDShop
                 {
                     MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
                         MessageBoxButtons.OK);
+                    txtProductUPC.Text = "";
                     return;
                 }
                 // Save if data is OK
@@ -472,6 +474,7 @@ namespace BookCDDVDShop
                 {
                     MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
                         MessageBoxButtons.OK);
+                    txtProductUPC.Text = "";
                     return;
                 }
                 if (Validators.ValidateBook(txtBookISBNLeft.Text, txtBookISBNRight.Text, txtBookAuthor.Text, txtBookPages.Text) == false)
@@ -527,6 +530,7 @@ namespace BookCDDVDShop
                 {
                     MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
                         MessageBoxButtons.OK);
+                    txtProductUPC.Text = "";
                     return;
                 }
                 if (Validators.ValidateBook(txtBookISBNLeft.Text, txtBookISBNRight.Text, txtBookAuthor.Text, txtBookPages.Text) == false)
@@ -589,6 +593,7 @@ namespace BookCDDVDShop
                 {
                     MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
                         MessageBoxButtons.OK);
+                    txtProductUPC.Text = "";
                     return;
                 }
                 if (Validators.ValidateDVD(txtDVDLeadActor.Text, txtDVDReleaseDate.Text, txtDVDRunTime.Text) == false)

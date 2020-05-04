@@ -84,7 +84,7 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "Instrument List:  " + hiddenInstrumentList;
+            s += "Instrument List:\t\t" + hiddenInstrumentList;
             return s;
         } //  end ToString
 

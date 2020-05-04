@@ -133,11 +133,11 @@ namespace BookCDDVDShop.Classes
         // inherits Object by default.
         public override string ToString()
         {
-            string s = "Object Type      : " + base.ToString() + "\n";
-            s += "Product UPC      : " + hiddenUPC + "\n";
-            s += "Product Title    : " + Convert.ToDecimal(hiddenPrice) + "\n";
-            s += "Product Price    : " + hiddenTitle + "\n";
-            s += "Product Quantity : " + Convert.ToInt32(hiddenQuantity);
+            string s = "Object Type:\t\t" + base.ToString() + "\n";
+            s += "Product UPC:\t\t" + hiddenUPC + "\n";
+            s += "Product Title:\t\t" + Convert.ToDecimal(hiddenPrice) + "\n";
+            s += "Product Price:\t\t" + hiddenTitle + "\n";
+            s += "Product Quantity:\t\t" + Convert.ToInt32(hiddenQuantity);
             return s;
         }  // end ToString
 
@@ -146,10 +146,10 @@ namespace BookCDDVDShop.Classes
         public void displayProductAsString(Product p)
         {
             string s = " ";
-            s += "Product UPC       : " + p.hiddenUPC + "\n";
-            s += "Product Title       : " + Convert.ToDecimal(p.hiddenPrice) + "\n";
-            s += "Product Price      : " + p.hiddenTitle + "\n";
-            s += "Product Quantity : " + Convert.ToInt32(p.hiddenQuantity);
+            s += "Product UPC:\t\t" + p.hiddenUPC + "\n";
+            s += "Product Title:\t\t" + Convert.ToDecimal(p.hiddenPrice) + "\n";
+            s += "Product Price:\t\t" + p.hiddenTitle + "\n";
+            s += "Product Quantity:\t\t" + Convert.ToInt32(p.hiddenQuantity);
             MessageBox.Show(s, "Display a Single Product in Product List");
         }
 
