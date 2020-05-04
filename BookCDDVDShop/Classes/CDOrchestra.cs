@@ -72,7 +72,7 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "Conductor:  " + hiddenConductor;
+            s += "Conductor:\t\t" + hiddenConductor;
             return s;
         } //  end ToString
 

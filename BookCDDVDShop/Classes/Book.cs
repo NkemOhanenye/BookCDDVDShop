@@ -124,7 +124,9 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "Book ISBN: " + hiddenISBNLeft + "-" + hiddenISBNRight + "\nBook Author: " + hiddenAuthor + "\nNumber of Pages: " + hiddenPages;
+            s += "Book ISBN:\t\t" + hiddenISBNLeft + "-" + hiddenISBNRight + "\n";
+            s += "Book Author:\t\t" + hiddenAuthor + "\n"; 
+            s += "Number of Pages:\t\t" + hiddenPages;
             return s;
         }  // end ToString
 

@@ -97,7 +97,8 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "CDClassical Label: " + hiddenLabel + "\nCDClassical Artists: " + hiddenArtists;
+            s += "CDClassical Label:\t\t" + hiddenLabel + "\n";
+            s += "CDClassical Artists:\t\t" + hiddenArtists;
             return s;
         }  // end ToString
 

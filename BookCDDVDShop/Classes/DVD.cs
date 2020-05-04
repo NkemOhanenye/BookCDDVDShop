@@ -114,7 +114,9 @@ namespace BookCDDVDShop.Classes
         public override string ToString()
         {
             string s = base.ToString() + "\n";
-            s += "DVD Lead Actor: " + hiddenLeadActor + "\nDVD Release Date: " + hiddenReleaseDate + "\nDVD Runtime: " + hiddenRuntime;
+            s += "DVD Lead Actor:\t\t" + hiddenLeadActor + "\n";
+            s += "DVD Release Date:\t\t" + hiddenReleaseDate + "\n";
+            s += "DVD Runtime:\t\t" + hiddenRuntime;
             return s;
         }  // end ToString
 
