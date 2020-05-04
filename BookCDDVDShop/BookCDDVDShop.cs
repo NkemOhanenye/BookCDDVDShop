@@ -152,11 +152,11 @@ namespace BookCDDVDShop
             else
             {
                 currentIndex = i;
-                thisProductList.getAnItem(i).Display(this);
+                thisProductList.getAnItem(currentIndex).Display(this);
                 // lblUserMessage.Text = "Object Type: " +
                 //  thisProductList.getAnItem(i).GetType().ToString() +
                 //" List Index: " + i.ToString();
-                btnFind.Enabled = true;
+                // btnFind.Enabled = true;
                 btnDelete.Enabled = true;
                 btnEdit.Enabled = true;
             }  // end else
@@ -167,21 +167,30 @@ namespace BookCDDVDShop
         // Returns true if found and false otherwise
         private bool findAnItem(string s)
         {
-            // int i = -1;
-            if (s.Equals("Edit/Update"))
+            int i = -1;
+            int givenUPC = Convert.ToInt32(txtProductUPC.Text);
+
+            foreach (Product p in thisProductList.getProductList)
             {
-                int givenUPC = Convert.ToInt32(txtProductUPC.Text);
-                foreach (Product p in thisProductList.getProductList)
+                if (p.ProductUPC == givenUPC)
                 {
-                    if (p.ProductUPC == givenUPC)
+                    if (s.Equals("Find/Display"))
                     {
-                        // sets i to the index where the found product is located in the list
+                        i = thisProductList.getProductList.IndexOf(p);
+                        getItem(i);
+                    }
+                    else if (s.Equals("Edit/Update"))
+                    {
+                        // sets currentIndex to the index where the found product is located in the list
                         currentIndex = thisProductList.getProductList.IndexOf(p);
                         // displayRelevantFormPart(p);
-                        return true;
                     }
-                }// end foreach loop
-            }// end if 
+
+                    return true;
+                } // end outer if
+
+            }// end foreach loop
+
             return false;
         }// end findAnItem method
 
@@ -201,6 +210,8 @@ namespace BookCDDVDShop
             // no duplicate
             return false;
         }
+
+        // Checks to see if there are duplicate ISBNs
         private bool lookForDuplicateISBN(int givenISBNLeft, int givenISBNRight)
         {
             foreach (Book b in thisProductList.getProductList)
@@ -503,7 +514,7 @@ namespace BookCDDVDShop
                 if (lookForDuplicateISBN(Convert.ToInt32(txtBookISBNLeft.Text),
                     Convert.ToInt32(txtBookISBNRight.Text)))
                 {
-                    MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
+                    MessageBox.Show("A book already has this ISBN.", "Duplicate ISBNs Not Allowed",
                         MessageBoxButtons.OK);
                     txtBookISBNLeft.Text = "";
                     txtBookISBNRight.Text = "";
@@ -568,7 +579,7 @@ namespace BookCDDVDShop
                 if (lookForDuplicateISBN(Convert.ToInt32(txtBookISBNLeft.Text),
                     Convert.ToInt32(txtBookISBNRight.Text)))
                 {
-                    MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
+                    MessageBox.Show("A book already has this ISBN.", "Duplicate ISBNs Not Allowed",
                         MessageBoxButtons.OK);
                     txtBookISBNLeft.Text = "";
                     txtBookISBNRight.Text = "";
@@ -660,6 +671,66 @@ namespace BookCDDVDShop
         }  // end btnClear_Click
 
 
+        // Handler for the Enter UPC button which enables UPC entry and search
+        private void btnEnterUPC_Click(object sender, EventArgs e)
+        {
+            txtProductUPC.Enabled = true;
+            btnFind.Enabled = true;
+            FormController.deactivateAddButtons(this);
+        }
+
+        // Handler for the Find/Display button which finds the product with the given UPC and displays its contents
+        private void btnFind_Click(object sender, EventArgs e)
+        {
+            btnEnterUPC.Enabled = false;
+            string s = "Find/Display";
+
+            if (Validators.ValidateProductUPC(txtProductUPC.Text) == false)
+            {
+                txtProductUPC.Text = "";
+                txtProductUPC.Focus();
+            }
+            else if (findAnItem(s) == false)
+            {
+                MessageBox.Show("The product does not exist. Please enter another UPC.", "Product Not Found");
+                txtProductUPC.Text = "";
+                txtProductUPC.Focus();
+            }
+            else
+            {
+                findAnItem(s);  // will call getItem which will display data on the form
+                txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
+                MessageBox.Show("The product with the given UPC is found.", "Product Found");
+            }
+        }
+
+
+        // Handler for the Delete button which will confirm with the user that the found product is the one
+        // they want to be deleted. Won't be enabled until the Find/Display button click finds the product
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            btnFind.Enabled = false;
+            btnEdit.Enabled = false;
+            string productString = thisProductList.getAnItem(currentIndex).ToString();
+            DialogResult result = MessageBox.Show("Are you sure you want to delete this product: \n\n" + productString,
+                "Confirm Delete", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                thisProductList.removeItem(currentIndex);
+                recordsProcessedCount++;
+                MessageBox.Show("Please clear the form for another transaction.", "Clear Form");
+                btnDelete.Enabled = false;
+                btnClear.Focus();
+            }
+            else   // user clicked No
+            {
+                MessageBox.Show("Clear the form and click button to enter a UPC.", "Clear and Re-enter UPC");
+                btnDelete.Enabled = false;
+                btnClear.Focus();
+            }
+        }
+
         // This code executes if the Edit button is clicked
         private void btnEdit_Click(object sender, EventArgs e)
         {
@@ -670,7 +741,6 @@ namespace BookCDDVDShop
             success = findAnItem("Edit/Update");   // boolean method that will return true if object is found in list or false otherwise
             if (success)
             {
-                btnSaveEditUpdate.Enabled = true;
                 btnEdit.Enabled = false;
 
                 Product p = thisProductList.getAnItem(currentIndex);
@@ -678,68 +748,164 @@ namespace BookCDDVDShop
                 txtProductUPC.Text = p.ProductUPC.ToString();
                 txtProductQuantity.Text = p.ProductQuantity.ToString();
                 txtProductTitle.Text = p.ProductTitle.ToString();
-                MessageBox.Show("Edit/UPDATE current Product (as shown). Press Save Updates Button", "Edit/Update Notice",
-                    MessageBoxButtons.OK);
-                if (p.GetType() == typeof(CDChamber))
+
+                string productString = p.ToString();
+                DialogResult result = MessageBox.Show("Are you sure you want to update this product: \n\n " + productString,
+                    "Confirm Product to be Updated", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.No)
                 {
-                    FormController.activateCDChamber(this);
-                    FormController.deactivateAllButCDChamber(this);
-                    FormController.deactivateAddButtons(this);
-
-                    txtCDClassicalLabel.Text = ((CDClassical)p).CDClassicalLabel;
-                    txtCDClassicalArtists.Text = ((CDClassical)p).CDClassicalArtists;
-                    txtCDChamberInstrumentList.Text = ((CDChamber)p).CDChamberInstrumentList;
-                }
-                else if (p.GetType() == typeof(CDOrchestra))
-                {
-                    FormController.activateCDOrchestra(this);
-                    FormController.deactivateAllButCDOrchestra(this);
-
-                    txtCDClassicalLabel.Text = ((CDClassical)p).CDClassicalLabel;
-                    txtCDClassicalArtists.Text = ((CDClassical)p).CDClassicalArtists;
-                    txtCDOrchestraConductor.Text = ((CDOrchestra)p).CDOrchestraConductor;
-                }
-                else if (p.GetType() == typeof(Book))
-                {
-                    FormController.activateBook(this);
-                    FormController.deactivateAllButBook(this);
-                    FormController.deactivateAddButtons(this);
-
-                    txtBookISBNLeft.Text = (((Book)p).BookISBNLeft).ToString();
-                    txtBookISBNRight.Text = (((Book)p).BookISBNRight).ToString();
-                    txtBookAuthor.Text = ((Book)p).BookAuthor;
-                    txtBookPages.Text = ((Book)p).BookPages.ToString();
-                }
-                else if (p.GetType() == typeof(BookCIS))
-                {
-                    FormController.activateBookCIS(this);
-                    FormController.deactivateAllButBookCIS(this);
-
-                    txtBookISBNLeft.Text = (((Book)p).BookISBNLeft).ToString();
-                    txtBookISBNRight.Text = (((Book)p).BookISBNRight).ToString();
-                    txtBookAuthor.Text = ((Book)p).BookAuthor;
-                    txtBookPages.Text = (((Book)p).BookPages).ToString();
-                    txtBookCISCISArea.Text = ((BookCIS)p).BookCISCISArea; ;
-                }  // end multiple alternative if
-
-                else if (p.GetType() == typeof(DVD))
-                {
-                    FormController.activateDVD(this);
-                    FormController.deactivateAllButDVD(this);
-
-                    txtDVDLeadActor.Text = ((DVD)p).DVDLeadActor;
-                    txtDVDReleaseDate.Text = ((DateTime)((DVD)p).DVDReleaseDate).ToString("mm/dd/yyyy");
-                    txtDVDRunTime.Text = (((DVD)p).DVDRuntime).ToString();
+                    txtProductUPC.Enabled = false;
+                    MessageBox.Show("Clear the form and click button to enter a UPC.", "Clear and Re-enter UPC");
+                    btnClear.Focus();
                 }
                 else
                 {
-                    MessageBox.Show("Fatal error. Data type not Book, BookCIS, DVD, DC Chamber or CD Orchestra. Program Terminated. ",
-                        "Mis-typed Object", MessageBoxButtons.OK);
-                    this.Close();
-                }  // end multiple alternative if
+                    MessageBox.Show("Edit/UPDATE current Product (as shown). Press Save Updates Button", "Edit/Update Notice",
+                        MessageBoxButtons.OK);
+                    if (p.GetType() == typeof(CDChamber))
+                    {
+                        FormController.activateCDChamber(this);
+                        FormController.deactivateAllButCDChamber(this);
+                        FormController.deactivateAddButtons(this);
+
+                        txtProductUPC.Enabled = false;
+                        txtCDClassicalLabel.Text = ((CDClassical)p).CDClassicalLabel;
+                        txtCDClassicalArtists.Text = ((CDClassical)p).CDClassicalArtists;
+                        txtCDChamberInstrumentList.Text = ((CDChamber)p).CDChamberInstrumentList;
+                    }
+                    else if (p.GetType() == typeof(CDOrchestra))
+                    {
+                        FormController.activateCDOrchestra(this);
+                        FormController.deactivateAllButCDOrchestra(this);
+
+                        txtProductUPC.Enabled = false;
+                        txtCDClassicalLabel.Text = ((CDClassical)p).CDClassicalLabel;
+                        txtCDClassicalArtists.Text = ((CDClassical)p).CDClassicalArtists;
+                        txtCDOrchestraConductor.Text = ((CDOrchestra)p).CDOrchestraConductor;
+                    }
+                    else if (p.GetType() == typeof(Book))
+                    {
+                        FormController.activateBook(this);
+                        FormController.deactivateAllButBook(this);
+                        FormController.deactivateAddButtons(this);
+
+                        txtProductUPC.Enabled = false;
+                        txtBookISBNLeft.Enabled = false;
+                        txtBookISBNRight.Enabled = false;
+                        txtBookISBNLeft.Text = (((Book)p).BookISBNLeft).ToString();
+                        txtBookISBNRight.Text = (((Book)p).BookISBNRight).ToString();
+                        txtBookAuthor.Text = ((Book)p).BookAuthor;
+                        txtBookPages.Text = ((Book)p).BookPages.ToString();
+                    }
+                    else if (p.GetType() == typeof(BookCIS))
+                    {
+                        FormController.activateBookCIS(this);
+                        FormController.deactivateAllButBookCIS(this);
+
+                        txtProductUPC.Enabled = false;
+                        txtBookISBNLeft.Enabled = false;
+                        txtBookISBNRight.Enabled = false;
+                        txtBookISBNLeft.Text = (((Book)p).BookISBNLeft).ToString();
+                        txtBookISBNRight.Text = (((Book)p).BookISBNRight).ToString();
+                        txtBookAuthor.Text = ((Book)p).BookAuthor;
+                        txtBookPages.Text = (((Book)p).BookPages).ToString();
+                        txtBookCISCISArea.Text = ((BookCIS)p).BookCISCISArea; ;
+                    }  // end multiple alternative if
+
+                    else if (p.GetType() == typeof(DVD))
+                    {
+                        FormController.activateDVD(this);
+                        FormController.deactivateAllButDVD(this);
+
+                        txtProductUPC.Enabled = false;
+                        txtDVDLeadActor.Text = ((DVD)p).DVDLeadActor;
+                        txtDVDReleaseDate.Text = ((DateTime)((DVD)p).DVDReleaseDate).ToString("mm/dd/yyyy");
+                        txtDVDRunTime.Text = (((DVD)p).DVDRuntime).ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Fatal error. Data type not Book, BookCIS, DVD, DC Chamber or CD Orchestra. Program Terminated. ",
+                            "Mis-typed Object", MessageBoxButtons.OK);
+                        this.Close();
+                    }  // end multiple alternative if
+
+                } // end outer else (when user confirms this is the product to be updated)
+
             }  // end if on success
+
+            btnSaveEditUpdate.Enabled = true;
         }  // end btnEdit_Click
 
+
+        // Handler for the Save Updates button which will make sure that all data is validated again before saving
+        private void btnSaveEditUpdate_Click(object sender, EventArgs e)
+        {
+            Product p = thisProductList.getAnItem(currentIndex);
+            if (Validators.ValidateProduct(txtProductUPC.Text, txtProductPrice.Text,
+                txtProductTitle.Text, txtProductQuantity.Text) == false)
+            {
+                MessageBox.Show("Please make sure your edits for the product price, title, and quantity.", "Invalid Data");
+                return;
+            }
+            else  // when all product data is valid
+            {
+                if (p.GetType() == typeof(CDChamber))
+                {
+                    if (Validators.ValidateCDClassical(txtCDClassicalLabel.Text, txtCDClassicalArtists.Text) == false
+                        | Validators.ValidateCDChamber(txtCDChamberInstrumentList.Text) == false)
+                    {
+                        MessageBox.Show("Please make sure your edited CD Chamber data is valid.", "Invalid CD Chamber Data");
+                        return;
+                    } 
+                } // end if for CD Chamber
+                else if (p.GetType() == typeof(CDOrchestra))
+                {
+                    if (Validators.ValidateCDClassical(txtCDClassicalLabel.Text, txtCDClassicalArtists.Text) == false
+                        | Validators.ValidateCDOrchestral(txtCDOrchestraConductor.Text) == false)
+                    {
+                        MessageBox.Show("Please make sure your edited CD Orchestra data is valid.", "Invalid CD Chamber Data");
+                        return;
+                    }
+                } // end if for CD Orchestra
+                else if (p.GetType() == typeof(Book))
+                {
+                    if (Validators.ValidateBook(txtBookISBNLeft.Text, txtBookISBNRight.Text, txtBookAuthor.Text, txtBookPages.Text) == false)
+                    {
+                        MessageBox.Show("Please make sure your edited Book data is valid.", "Invalid Book Data");
+                        return;
+                    }
+                } // end if for Book
+                else if (p.GetType() == typeof(BookCIS))
+                {
+                    if (Validators.ValidateBook(txtBookISBNLeft.Text, txtBookISBNRight.Text, txtBookAuthor.Text, txtBookPages.Text) == false
+                        | Validators.ValidateCISBook(txtBookCISCISArea.Text) == false)
+                    {
+                        MessageBox.Show("Please make sure your edited CIS Book data is valid.", "Invalid CIS Book Data");
+                        return;
+                    }
+                } // end if for Book CIS
+                else if (p.GetType() == typeof(DVD))
+                {
+                    if (Validators.ValidateDVD(txtDVDLeadActor.Text, txtDVDReleaseDate.Text, txtDVDRunTime.Text) == false)
+                    {
+                        MessageBox.Show("Please make sure your edited DVD data is valid.", "Invalid DVD Data");
+                    }
+                } // end inner if-else
+
+                // save the edited data for this product
+                p.Save(this);
+                btnSaveEditUpdate.Enabled = false;
+                recordsProcessedCount++;
+
+                string itemSaved = p.ToString();
+                MessageBox.Show("Product updated as shown: \n\n" + itemSaved, "Product Updated and Saved");
+                MessageBox.Show("Please clear the form for another transaction.", "Clear Form");
+                btnClear.Focus();
+                
+            } // end outer else (when product data is valid)
+
+        }
 
         // Displays the records for the products, writes out to serialized file, closes form
         private void btnExit_Click(object sender, EventArgs e)
