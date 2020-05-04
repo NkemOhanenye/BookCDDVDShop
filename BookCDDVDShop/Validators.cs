@@ -224,7 +224,7 @@ namespace BookCDDVDShop.Classes
                 return false;
             }
 
-            // using Regex to validate if the author contains invalid characters
+            // using Regex to validate if the author contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(author, @"^[a-zA-Z-]"))
             {
                 MessageBox.Show("Book author contains invalid characters. Re-enter.", "Book author Error");
@@ -272,13 +272,31 @@ namespace BookCDDVDShop.Classes
 
         // Validate CISBook CISArea
         public static bool ValidateCISBookCISArea
-            (string CISArea) // IN: CISArea dropdown (cant be empty)
+            (string CISArea) // IN: CISArea (cant be empty, checks to see if there are a space between words)
         {
-            if (CISArea == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(CISArea, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (CISArea == "" || count < 1)
             {
                 MessageBox.Show("CISBook CISArea was blank. Re-enter.", "CISBook CISArea Error");
                 return false;
             }
+
+            if (count >= 2 && !CISArea.Contains(" "))
+            {
+                MessageBox.Show("CISBook CISArea words need to be seperated by a space. Re-enter.", "CISBook CISArea Error");
+                return false;
+            }
+
             return true; // passed all tests
         } // end Validate CISBookCISArea
 
@@ -325,7 +343,7 @@ namespace BookCDDVDShop.Classes
                 return false;
             }
 
-            // using Regex to validate if the leadActor contains invalid characters
+            // using Regex to validate if the leadActor contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(leadActor, @"^[a-zA-Z-]"))
             {
                 MessageBox.Show("DVD lead actor contains invalid characters. Re-enter.", "DVD leadActor Error");
@@ -508,12 +526,12 @@ namespace BookCDDVDShop.Classes
             }
 
             // using Regex to validate that the conductor contains valid characters
-            if (System.Text.RegularExpressions.Regex.IsMatch(conductor, @"^[a-zA-Z-]"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(conductor, @"^[a-zA-Z-]"))
             {
                 MessageBox.Show("CDOrchestral conductor can't contain invalid characters. Reenter.",
                     "Regex CDOrchestral conductor Error");
                 return false;
-            } // end Product title Regex test
+            } // end CDOrchestral conductor Regex test
 
             return true; // passed all tests
         } // end Validate CDOrchestralConductor
@@ -530,13 +548,44 @@ namespace BookCDDVDShop.Classes
 
         // Valicate CDChamberInstruments
         public static bool ValidateCDChamberInstrumentsList
-            (string instruments) // IN: instruments Dropdown list (seperated between commas)
+            (string instruments) // IN: instruments list (cant be blank, seperated between commas)
         {
-            if (instruments == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(instruments, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (instruments == "" || count < 1)
             {
                 MessageBox.Show("CDChamber instruments was blank. Re-enter.", "CDChamber instruments Error");
                 return false;
             }
+
+            if (count >= 2 && !instruments.Contains(","))
+            {
+                MessageBox.Show("CDChamber instruments need to be seperated by commas. Re-enter.", "CDChamber instruments Error");
+                return false;
+            }
+
+            if (instruments.Length <= 2)
+            {
+                MessageBox.Show("CDChamber instruments was less than or equal to 2 characters. Re-enter.", "CDChamber instruments Error");
+                return false;
+            }
+
+            // using Regex to validate that the instruments contains valid characters
+            if (!System.Text.RegularExpressions.Regex.IsMatch(instruments, @"^[a-zA-Z-,]"))
+            {
+                MessageBox.Show("CDChamber instruments can't contain invalid characters. Reenter.",
+                    "Regex CDChamber instruments Error");
+                return false;
+            } // end CDChamber instruments Regex test
             return true;
         } // end Validate CDChamberInstruments
     } // end Validators class
