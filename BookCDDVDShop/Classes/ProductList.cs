@@ -54,6 +54,13 @@ namespace BookCDDVDShop.Classes
         }
 
 
+        // Deletes an item from the list given the item's index
+        public void removeItem(int i)
+        {
+            hiddenProductList.Remove(hiddenProductList[i]);
+        }
+
+
         // Get or set an item in the List
         public Product getAnItem(int i)
         {
