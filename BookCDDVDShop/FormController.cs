@@ -107,7 +107,6 @@ namespace BookCDDVDShop
         // Deactivate all but BookCIS
         public static void deactivateAllButBookCIS(frmBookCDDVDShop f)
         {
-            FormController.deactivateBook(f);
             FormController.deactivateCDOrchestra(f);
             FormController.deactivateCDChamber(f);
             FormController.deactivateDVD(f);
@@ -187,7 +186,7 @@ namespace BookCDDVDShop
             f.grpProduct.Enabled = true;
             f.grpProduct.BackColor = Color.LimeGreen;
             f.txtProductUPC.Enabled = true;
-            f.txtProductUPC.Enabled = true;
+            f.txtProductPrice.Enabled = true;
             f.txtProductTitle.Enabled = true;
             f.txtProductQuantity.Enabled = true;
         }  // end activateProduct
@@ -215,6 +214,7 @@ namespace BookCDDVDShop
             f.grpCDClassical.BackColor = Color.Red;
             f.grpDVD.BackColor = Color.Red;
             f.txtBookISBNLeft.Enabled = true;
+            f.txtBookISBNRight.Enabled = true;
             f.txtBookAuthor.Enabled = true;
             f.txtBookPages.Enabled = true;
         }  // end activateBook

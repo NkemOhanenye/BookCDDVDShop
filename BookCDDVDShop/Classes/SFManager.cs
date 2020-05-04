@@ -39,7 +39,7 @@ namespace BookCDDVDShop.Classes
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("File open error: Owl Member List not written", "SFManager File Open");
+                    MessageBox.Show("File open error: Product List not written", "SFManager File Open");
                     MessageBox.Show(ex.ToString());
                     return false;
                 }  // end Try
@@ -47,11 +47,11 @@ namespace BookCDDVDShop.Classes
                 try
                 {
                     serializer.Serialize(thisFileStream, plist);
-                    MessageBox.Show("File write: Owl Member List was written to serializable file.");
+                    MessageBox.Show("File write: Product List was written to serializable file.");
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("File write error: Owl Member List not written", "SFManager File Write");
+                    MessageBox.Show("File write error: Product List not written", "SFManager File Write");
                     MessageBox.Show(ex.ToString());
                     return false;
                 }
