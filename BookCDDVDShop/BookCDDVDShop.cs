@@ -201,7 +201,19 @@ namespace BookCDDVDShop
             // no duplicate
             return false;
         }
-
+        private bool lookForDuplicateISBN(int givenISBNLeft, int givenISBNRight)
+        {
+            foreach (Book b in thisProductList.getProductList)
+            {
+                if (b.BookISBNLeft == givenISBNLeft && b.BookISBNRight == givenISBNRight)
+                {
+                    // dublicate found
+                    return true;
+                }
+            }
+            // no duplicate
+            return false;
+        }
 
         // ******************************************** Display form methods **************************************************************************
 
@@ -486,8 +498,17 @@ namespace BookCDDVDShop
                     txtBookISBNLeft.Focus();
                     MessageBox.Show("Please check that all data is entered and valid.");
                     return;
+                }
+                // Look for duplicate ISBN method
+                if (lookForDuplicateISBN(Convert.ToInt32(txtBookISBNLeft.Text),
+                    Convert.ToInt32(txtBookISBNRight.Text)))
+                {
+                    MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
+                        MessageBoxButtons.OK);
+                    txtBookISBNLeft.Text = "";
+                    txtBookISBNRight.Text = "";
+                    return;
                 } // end inner if-then
-
                 // all data is valid so new Book object created and saved to product list
                 Book thisBookObject = new Book();
                 thisBookObject.Save(this);
@@ -542,7 +563,17 @@ namespace BookCDDVDShop
                     txtBookISBNLeft.Focus();
                     MessageBox.Show("Please check that all data is entered and valid.");
                     return;
-                } 
+                }
+                // Look for duplicate ISBN method
+                if (lookForDuplicateISBN(Convert.ToInt32(txtBookISBNLeft.Text),
+                    Convert.ToInt32(txtBookISBNRight.Text)))
+                {
+                    MessageBox.Show("Duplicates not allowed in this application.", "Duplicates Not Allowed",
+                        MessageBoxButtons.OK);
+                    txtBookISBNLeft.Text = "";
+                    txtBookISBNRight.Text = "";
+                    return;
+                }
                 if (Validators.ValidateCISBook(txtBookCISCISArea.Text) == false)
                 {
                     txtBookCISCISArea.Text = "";
