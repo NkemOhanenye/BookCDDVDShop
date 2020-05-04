@@ -52,21 +52,21 @@ namespace BookCDDVDShop.Classes
 
             if (UPC[0] == '0')
             {
-                MessageBox.Show("Product UPC was began with a 0. Re-enter.", "Product UPC Error");
+                MessageBox.Show("Product UPC began with a 0. Re-enter.", "Product UPC Error");
                 return false;
             }
 
             // Using Regex to validate the Product UPC text box to contain exactly 5 digits 
             if (!System.Text.RegularExpressions.Regex.IsMatch(UPC, @"^[0-9]{5}$"))
             {
-                MessageBox.Show("Product UPC must be a 5 digit value with no leading zeros. Reenter.",
+                MessageBox.Show("Product UPC must be a 5 digit value with no leading zeros. Re-enter.",
                     "Regex Product UPC Error");
                 return false;
             }  // end Product UPC Regex test
 
             if (Convert.ToInt32(UPC) <= 0)
             {
-                MessageBox.Show("Product UPC was less than 0. Re-enter.", "Product UPC Error");
+                MessageBox.Show("Product UPC was less than ot equal to 0. Re-enter.", "Product UPC Error");
                 return false;
             }
             return true;   // Passed all tests
@@ -78,7 +78,7 @@ namespace BookCDDVDShop.Classes
         {
             if (price == "" || price == " ")
             {
-                MessageBox.Show("Product price was blank. Re-enter.", "Product price Error");
+                MessageBox.Show("Product price was blank. Re-enter.", "Product Price Error");
                 return false;
             }
 
@@ -92,13 +92,13 @@ namespace BookCDDVDShop.Classes
             if (!System.Text.RegularExpressions.Regex.IsMatch(price, @"^[0-9]\d{0,2}(\.\d{1,2})?$"))
             {
                 MessageBox.Show("Product price must be all numbers and have 2 numbers after the decimal. Reenter.",
-                    "Regex Product price Error");
+                    "Regex Product Price Error");
                 return false;
             } // end Product price Regex test
 
             if (Convert.ToDecimal(price) <= 0)
             {
-                MessageBox.Show("Product price was less than 0. Re-enter.", "Product price Error");
+                MessageBox.Show("Product price was less than or equal to 0. Re-enter.", "Product Price Error");
                 return false;
             }
             return true; // Passed all tests
@@ -121,7 +121,7 @@ namespace BookCDDVDShop.Classes
 
             if (title == "" || count < 1)
             {
-                MessageBox.Show("Product title was blank. Re-enter.", "Product title Error");
+                MessageBox.Show("Product title was blank. Re-enter.", "Product Title Error");
                 return false;
             }
 
@@ -134,21 +134,21 @@ namespace BookCDDVDShop.Classes
         {
             if (quantity == "" || quantity == " ")
             {
-                MessageBox.Show("Product quantity was blank. Re-enter.", "Product quantity Error");
+                MessageBox.Show("Product quantity was blank. Re-enter.", "Product Quantity Error");
                 return false;
             }
 
             // using Regex to validate the Product quantiy text box to contain only digits
             if (!System.Text.RegularExpressions.Regex.IsMatch(quantity, @"^[0-9]"))
             {
-                MessageBox.Show("Product quantity must be all numbers. Reenter.",
-                    "Regex Product quanity Error");
+                MessageBox.Show("Product quantity must be all numbers. Re-enter.",
+                    "Regex Product Quanity Error");
                 return false;
             } // end Product quantity regex test
 
             if (Convert.ToInt32(quantity) <= 0)
             {
-                MessageBox.Show("Product quantity was less than 0. Re-enter.", "Product quantity Error");
+                MessageBox.Show("Product quantity was less than or equal to 0. Re-enter.", "Product quantity Error");
                 return false;
             }
             return true; // passed all tests
@@ -178,14 +178,14 @@ namespace BookCDDVDShop.Classes
             if (!System.Text.RegularExpressions.Regex.IsMatch(ISBNLeft, @"^[0-9]{3}$") ||
                 !System.Text.RegularExpressions.Regex.IsMatch(ISBNRight, @"^[0-9]{3}$"))
             {
-                MessageBox.Show("Book ISBN must be all numbers and of length 3. Reenter.",
+                MessageBox.Show("Book ISBN must be all numbers and of length 3. Re-enter.",
                     "Regex Book ISBN Error");
                 return false;
             } // end Book ISBN Regex tests
 
             if (ISBNLeft[0] == '0')
             {
-                MessageBox.Show("Book ISBNLeft was began with a 0. Re-enter.", "Book ISBN Error");
+                MessageBox.Show("Book ISBNLeft began with a 0. Re-enter.", "Book ISBN Error");
                 return false;
             }
             return true; // passed all tests
@@ -208,26 +208,26 @@ namespace BookCDDVDShop.Classes
 
             if (author == "" || count < 1)
             {
-                MessageBox.Show("Book author was blank. Re-enter.", "Book author Error");
+                MessageBox.Show("Book author was blank. Re-enter.", "Book Author Error");
                 return false;
             }
 
             if (count >= 2 && !author.Contains(" "))
             {
-                MessageBox.Show("Book Author words need to be seperated by a space. Re-enter.", "Book author Error");
+                MessageBox.Show("Book Author words need to be seperated by a space. Re-enter.", "Book Author Error");
                 return false;
             }
 
             if (author.Length <= 2)
             {
-                MessageBox.Show("Book author was less than or equal to 2 characters. Re-enter.", "Book author Error");
+                MessageBox.Show("Book author was less than or equal to 2 characters. Re-enter.", "Book Author Error");
                 return false;
             }
 
             // using Regex to validate if the author contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(author, @"^[a-zA-Z-]"))
             {
-                MessageBox.Show("Book author contains invalid characters. Re-enter.", "Book author Error");
+                MessageBox.Show("Book author contains invalid characters. Re-enter.", "Book Author Error");
                 return false;
             } // end Book Author Regex tests
 
@@ -240,21 +240,21 @@ namespace BookCDDVDShop.Classes
         {
             if (pages == "" || pages == " ")
             {
-                MessageBox.Show("Book pages was blank. Re-enter.", "Book author Error");
+                MessageBox.Show("Book pages was blank. Re-enter.", "Book Author Error");
                 return false;
             }
 
             // using Regex to validate if the pages is all digits
             if (!System.Text.RegularExpressions.Regex.IsMatch(pages, @"^[0-9]"))
             {
-                MessageBox.Show("Book pages must be all numbers. Reenter.",
+                MessageBox.Show("Book pages must be all numbers. Re-enter.",
                     "Regex Book Pages Error");
                 return false;
             } // end Book pages Regex tests
 
             if (Convert.ToInt32(pages) <= 0)
             {
-                MessageBox.Show("Book pages was less than 0. Re-enter.", "Book pages Error");
+                MessageBox.Show("Book pages was less than or equal to 0. Re-enter.", "Book Pages Error");
                 return false;
             }
             return true; // passed all tests
@@ -327,26 +327,26 @@ namespace BookCDDVDShop.Classes
 
             if (leadActor == "" || count < 1)
             {
-                MessageBox.Show("DVD leadActor was blank. Re-enter.", "DVD leadActor Error");
+                MessageBox.Show("DVD leadActor was blank. Re-enter.", "DVD Lead Actor Error");
                 return false;
             }
 
             if (count >= 2 && !leadActor.Contains(" "))
             {
-                MessageBox.Show("DVD lead actor words need to be seperated by a space. Re-enter.", "DVD leadActor Error");
+                MessageBox.Show("DVD lead actor words need to be seperated by a space. Re-enter.", "DVD Lead Actor Error");
                 return false;
             }
 
             if (leadActor.Length <= 2)
             {
-                MessageBox.Show("DVD lead actor was less than or equal to 2 characters. Re-enter.", "DVD lead actor Error");
+                MessageBox.Show("DVD lead actor was less than or equal to 2 characters. Re-enter.", "DVD Lead Actor Error");
                 return false;
             }
 
             // using Regex to validate if the leadActor contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(leadActor, @"^[a-zA-Z-]"))
             {
-                MessageBox.Show("DVD lead actor contains invalid characters. Re-enter.", "DVD leadActor Error");
+                MessageBox.Show("DVD lead actor contains invalid characters. Re-enter.", "DVD Lead Actor Error");
                 return false;
             } // end DVD Lead Actor Regex tests
 
@@ -368,13 +368,13 @@ namespace BookCDDVDShop.Classes
                 DateTime date = Convert.ToDateTime(releaseDate);
                 if (date.Year < 1980 || (date.Year == 2019 && date.Month == 12 && date.Day == 31) || date.Year > 2019)
                 {
-                    MessageBox.Show("DVD releaseDate not valid. Re-enter.", "DVD releaseDate Error");
+                    MessageBox.Show("DVD releaseDate not valid. Date must be after 1980 and before 2020. Re-enter.", "DVD Release Date Error");
                     return false;
                 }
             }
             catch
             {
-                MessageBox.Show("DVD releaseDate was not a valid date. Re-enter.", "DVD releaseDate Error");
+                MessageBox.Show("DVD releaseDate was not a valid date. Re-enter.", "DVD Release Date Error");
                 return false;
             }
             return true; // passed all tests
@@ -385,21 +385,21 @@ namespace BookCDDVDShop.Classes
         {
             if (runTime == "" || runTime == " ")
             {
-                MessageBox.Show("DVD runTime was blank. Re-enter.", "DVD runTime Error");
+                MessageBox.Show("DVD runtime was blank. Re-enter.", "DVD Run Time Error");
                 return false;
             }
 
             // using Regex to validate if the runTime is all digits
             if (!System.Text.RegularExpressions.Regex.IsMatch(runTime, @"^[0-9]"))
             {
-                MessageBox.Show("DVD runTime must be all numbers. Reenter.",
-                    "Regex DVD runTime Error");
+                MessageBox.Show("DVD runtime must be all numbers. Re-enter.",
+                    "Regex DVD Run Time Error");
                 return false;
             } // end DVD runTIme Regex tests
 
             if (Convert.ToInt32(runTime) <= 0 || Convert.ToInt32(runTime) > 240)
             {
-                MessageBox.Show("DVD runTime was either too high or too low. Re-enter.", "DVD runTime Error");
+                MessageBox.Show("DVD runtime was either too high or too low. Must be greater than 0, less than 240. Re-enter.", "DVD Run Time Error");
                 return false;
             }
             return true; // passed all tests
@@ -432,7 +432,7 @@ namespace BookCDDVDShop.Classes
 
             if (label == "" || count < 1)
             {
-                MessageBox.Show("CDClassical label was blank. Re-enter.", "CDClassical label Error");
+                MessageBox.Show("CDClassical label was blank. Re-enter.", "CDClassical Label Error");
                 return false;
             }
             return true; // passed all tests
@@ -455,27 +455,27 @@ namespace BookCDDVDShop.Classes
 
             if (artists == "" || count < 1)
             {
-                MessageBox.Show("CDClassical artists was blank. Re-enter.", "CDClassical artists Error");
+                MessageBox.Show("CDClassical artists was blank. Re-enter.", "CDClassical Artists Error");
                 return false;
             }
 
             if (count >= 2 && !artists.Contains(" "))
             {
-                MessageBox.Show("CDClassical artists words need to be seperated by a space. Re-enter.", "CDClassical artists Error");
+                MessageBox.Show("CDClassical artists' names need to be seperated by a space. Re-enter.", "CDClassical Artists Error");
                 return false;
             }
 
             if (artists.Length <= 2)
             {
-                MessageBox.Show("CDClassical artists was less than or equal to 2 characters. Re-enter.", "CDClassical artists Error");
+                MessageBox.Show("CDClassical artists was less than or equal to 2 characters. Re-enter.", "CDClassical Artists Error");
                 return false;
             }
 
             // using Regex to validate that the artists contains no invalid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(artists, @"^[a-zA-Z,]"))
             {
-                MessageBox.Show("CDClassical artists contains invalid characters. Reenter.",
-                    "Regex CDClassical artists Error");
+                MessageBox.Show("CDClassical artists contains invalid characters. Re-enter.",
+                    "Regex CDClassical Artists Error");
                 return false;
             } // end CDClassical artists Regex test
 
@@ -509,27 +509,27 @@ namespace BookCDDVDShop.Classes
 
             if (conductor == "" || count < 1)
             {
-                MessageBox.Show("CDOrchestral conductor was blank. Re-enter.", "CDOrchestral conductor Error");
+                MessageBox.Show("CDOrchestral conductor was blank. Re-enter.", "CDOrchestral Conductor Error");
                 return false;
             }
 
             if (count >= 2 && !conductor.Contains(" "))
             {
-                MessageBox.Show("CDClassical conductor words need to be seperated by a space. Re-enter.", "CDClassical conductor Error");
+                MessageBox.Show("CDClassical conductor names need to be seperated by a space. Re-enter.", "CDClassical Conductor Error");
                 return false;
             }
 
             if (conductor.Length <= 2)
             {
-                MessageBox.Show("CDClassical conductor was less than or equal to 2 characters. Re-enter.", "CDClassical conductor Error");
+                MessageBox.Show("CDClassical conductor was less than or equal to 2 characters. Re-enter.", "CDClassical Conductor Error");
                 return false;
             }
 
             // using Regex to validate that the conductor contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(conductor, @"^[a-zA-Z-]"))
             {
-                MessageBox.Show("CDOrchestral conductor can't contain invalid characters. Reenter.",
-                    "Regex CDOrchestral conductor Error");
+                MessageBox.Show("CDOrchestral conductor can't contain invalid characters. Re-enter.",
+                    "Regex CDOrchestral Conductor Error");
                 return false;
             } // end CDOrchestral conductor Regex test
 
@@ -563,27 +563,27 @@ namespace BookCDDVDShop.Classes
 
             if (instruments == "" || count < 1)
             {
-                MessageBox.Show("CDChamber instruments was blank. Re-enter.", "CDChamber instruments Error");
+                MessageBox.Show("CDChamber instruments was blank. Re-enter.", "CDChamber Instruments Error");
                 return false;
             }
 
             if (count >= 2 && !instruments.Contains(","))
             {
-                MessageBox.Show("CDChamber instruments need to be seperated by commas. Re-enter.", "CDChamber instruments Error");
+                MessageBox.Show("CDChamber instruments need to be seperated by commas. Re-enter.", "CDChamber Instruments Error");
                 return false;
             }
 
             if (instruments.Length <= 2)
             {
-                MessageBox.Show("CDChamber instruments was less than or equal to 2 characters. Re-enter.", "CDChamber instruments Error");
+                MessageBox.Show("CDChamber instruments was less than or equal to 2 characters. Re-enter.", "CDChamber Instruments Error");
                 return false;
             }
 
             // using Regex to validate that the instruments contains valid characters
             if (!System.Text.RegularExpressions.Regex.IsMatch(instruments, @"^[a-zA-Z-,]"))
             {
-                MessageBox.Show("CDChamber instruments can't contain invalid characters. Reenter.",
-                    "Regex CDChamber instruments Error");
+                MessageBox.Show("CDChamber instruments can't contain invalid characters. Re-enter.",
+                    "Regex CDChamber Instruments Error");
                 return false;
             } // end CDChamber instruments Regex test
             return true;
