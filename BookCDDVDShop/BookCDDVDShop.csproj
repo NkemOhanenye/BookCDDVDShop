@@ -63,7 +63,6 @@
     <Compile Include="FormController.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\SFManager.cs" />
-    <Compile Include="Globals.cs" />
     <Compile Include="Validators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
