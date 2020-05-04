@@ -47,11 +47,12 @@ namespace BookCDDVDShop
         string FileName = "PersistentObject.bin";
 
         // Database methods and attributes stored here
-        // ProductDB dbFunctions = new ProductDB();// Parameterless Constructor for fmrEmpMan
-        public frmBookCDDVDShop()
+        ProductDB dbFunctions = new ProductDB();
+
+        public frmBookCDDVDShop()  // Parameterless Constructor for frmBookCDDVDShop
         {
             InitializeComponent();
-        }  // end frmEmpMan Parameterless Constructor
+        }  // end frmBookCDDVDShop Parameterless Constructor
 
 
         // Tooltip messages
@@ -65,13 +66,12 @@ namespace BookCDDVDShop
         string ttSaveBookCIS = "Click to Save a BookCIS object to the list of Products.";
         string ttSaveBook = "Click to Save the Book object to the List of Products.";
         string ttSaveDVD = "Click to Save the DVD to the List of Products.";
+
         string ttClear = "Click to Clear Form.";
         string ttFind = "Click to Find a Product in the List of Products.";
         string ttDelete = "Click to Delete Product from the List of Products.";
         string ttEdit = "Click to Edit a Product's data.";
         string ttExit = "Click to exit application.";
-
-        // ?????????? Fix The Specs (in red) for Each Item ??????????
 
         string ttProductUPC = "Enter a 5 digit integer - no leading zeros";
         string ttProductPrice = "Enter dollars and cents >= 0.0. NO $. Exactly two decimal digits";
@@ -385,12 +385,12 @@ namespace BookCDDVDShop
                     return;
                 }  // end inner if then
 
-                //  dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
-                //      txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
-                //  dbFunctions.InsertCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
-                //      txtCDClassicalArtists.Text);
-                //  dbFunctions.InsertCDChamber(Convert.ToInt32(txtProductUPC.Text), txtCDChamberInstrumentList.Text);
-
+                // all data is valid so new CDChamber object created and saved to Database
+                dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CD Chamber");
+                dbFunctions.InsertCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
+                    txtCDClassicalArtists.Text);
+                dbFunctions.InsertCDChamber(Convert.ToInt32(txtProductUPC.Text), txtCDChamberInstrumentList.Text);
 
                 // all data is valid so new CDChamber object created and saved to product list
                 CDChamber thisCDChamberObject = new CDChamber();
@@ -454,6 +454,13 @@ namespace BookCDDVDShop
                     MessageBox.Show("Please check that all data is entered and valid.");
                     return;
                 } // end inner if-then
+
+                // all data is valid so new CDOrchestra object created and saved to Database
+                dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CD Orchestra");
+                dbFunctions.InsertCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
+                    txtCDClassicalArtists.Text);
+                dbFunctions.InsertCDOrchestra(Convert.ToInt32(txtProductUPC.Text), txtCDOrchestraConductor.Text);
 
                 // all data is valid so new CDOrchestra object created and saved to product list
                 CDOrchestra thisCDOrchestraObject = new CDOrchestra();
@@ -520,6 +527,14 @@ namespace BookCDDVDShop
                     txtBookISBNRight.Text = "";
                     return;
                 } // end inner if-then
+
+                // all data is valid so new Book object created and saved to Database
+                string ISBN = txtBookISBNLeft.Text + txtBookISBNRight.Text;
+                dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "Book");
+                dbFunctions.InsertBook(Convert.ToInt32(txtProductUPC.Text), Convert.ToInt32(ISBN),
+                    txtBookAuthor.Text, Convert.ToInt32(txtBookPages.Text));
+
                 // all data is valid so new Book object created and saved to product list
                 Book thisBookObject = new Book();
                 thisBookObject.Save(this);
@@ -593,6 +608,14 @@ namespace BookCDDVDShop
                     return;
                 } // end inner if-then
 
+                // all data is valid so new BookCIS object created and saved to Database
+                string ISBN = txtBookISBNLeft.Text + txtBookISBNRight.Text;
+                dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "Book CIS");
+                dbFunctions.InsertBook(Convert.ToInt32(txtProductUPC.Text), Convert.ToInt32(ISBN),
+                    txtBookAuthor.Text, Convert.ToInt32(txtBookPages.Text));
+                dbFunctions.InsertBookCIS(Convert.ToInt32(txtProductUPC.Text), txtBookCISCISArea.Text);
+
                 // all data is valid so new Book object created and saved to product list
                 BookCIS thisBookCISObject = new BookCIS();
                 thisBookCISObject.Save(this);
@@ -647,6 +670,12 @@ namespace BookCDDVDShop
                     MessageBox.Show("Please check that all data is entered and valid.");
                     return;
                 } // end inner if-then
+
+                // all data is valid so new DVD object created and saved to Database
+                dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "DVD");
+                dbFunctions.InsertDVD(Convert.ToInt32(txtProductUPC.Text), txtDVDLeadActor.Text, 
+                    Convert.ToDateTime(txtDVDReleaseDate), Convert.ToInt32(txtDVDRunTime.Text));
 
                 // all data is valid so new DVD object created and saved to product list
                 DVD thisDVDObject = new DVD();
@@ -717,6 +746,9 @@ namespace BookCDDVDShop
 
             if (result == DialogResult.Yes)
             {
+                // The found item is deleted from the database
+                dbFunctions.Delete(Convert.ToInt32(txtProductUPC.Text));
+
                 thisProductList.removeItem(currentIndex);
                 recordsProcessedCount++;
                 MessageBox.Show("Please clear the form for another transaction.", "Clear Form");
@@ -857,7 +889,13 @@ namespace BookCDDVDShop
                     {
                         MessageBox.Show("Please make sure your edited CD Chamber data is valid.", "Invalid CD Chamber Data");
                         return;
-                    } 
+                    }
+                    // all data is valid so CDChamber object updated to Database
+                    dbFunctions.UpdateProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                        txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
+                    dbFunctions.UpdateCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
+                        txtCDClassicalArtists.Text);
+                    dbFunctions.UpdateCDChamber(Convert.ToInt32(txtProductUPC.Text), txtCDChamberInstrumentList.Text);
                 } // end if for CD Chamber
                 else if (p.GetType() == typeof(CDOrchestra))
                 {
@@ -867,6 +905,12 @@ namespace BookCDDVDShop
                         MessageBox.Show("Please make sure your edited CD Orchestra data is valid.", "Invalid CD Chamber Data");
                         return;
                     }
+                    // all data is valid so CDOrchestra object updated to Database
+                    dbFunctions.UpdateProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                        txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
+                    dbFunctions.UpdateCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
+                        txtCDClassicalArtists.Text);
+                    dbFunctions.UpdateCDOrchestra(Convert.ToInt32(txtProductUPC.Text), txtCDOrchestraConductor.Text);
                 } // end if for CD Orchestra
                 else if (p.GetType() == typeof(Book))
                 {
@@ -875,6 +919,12 @@ namespace BookCDDVDShop
                         MessageBox.Show("Please make sure your edited Book data is valid.", "Invalid Book Data");
                         return;
                     }
+                    // all data is valid so Book object updated to Database
+                    string ISBN = txtBookISBNLeft.Text + txtBookISBNRight.Text;
+                    dbFunctions.UpdateProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                        txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
+                    dbFunctions.UpdateBook(Convert.ToInt32(txtProductUPC.Text), Convert.ToInt32(ISBN),
+                        txtBookAuthor.Text, Convert.ToInt32(txtBookPages.Text));
                 } // end if for Book
                 else if (p.GetType() == typeof(BookCIS))
                 {
@@ -884,6 +934,13 @@ namespace BookCDDVDShop
                         MessageBox.Show("Please make sure your edited CIS Book data is valid.", "Invalid CIS Book Data");
                         return;
                     }
+                    // all data is valid so BookCIS object updated to Database
+                    string ISBN = txtBookISBNLeft.Text + txtBookISBNRight.Text;
+                    dbFunctions.UpdateProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                        txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
+                    dbFunctions.UpdateBook(Convert.ToInt32(txtProductUPC.Text), Convert.ToInt32(ISBN),
+                        txtBookAuthor.Text, Convert.ToInt32(txtBookPages.Text));
+                    dbFunctions.UpdateBookCIS(Convert.ToInt32(txtProductUPC.Text), txtBookCISCISArea.Text);
                 } // end if for Book CIS
                 else if (p.GetType() == typeof(DVD))
                 {
@@ -891,6 +948,11 @@ namespace BookCDDVDShop
                     {
                         MessageBox.Show("Please make sure your edited DVD data is valid.", "Invalid DVD Data");
                     }
+                    // all data is valid so DVD object updated to Database
+                    dbFunctions.UpdateProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
+                        txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text));
+                    dbFunctions.UpdateDVD(Convert.ToInt32(txtProductUPC.Text), txtDVDLeadActor.Text, 
+                        Convert.ToDateTime(txtDVDReleaseDate.Text), Convert.ToInt32(txtDVDRunTime.Text));
                 } // end inner if-else
 
                 // save the edited data for this product
