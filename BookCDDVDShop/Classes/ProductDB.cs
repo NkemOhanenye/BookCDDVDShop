@@ -184,7 +184,7 @@ namespace BookCDDVDShop.Classes
         //     CDClassical Label and CDClassical Artists
         public bool InsertCDClassical(int UPC, string label, string artists)
         {
-            string strInsertCDClassical = "INSERT INTO CDCLASSICAL (fldUPC, fldLabel, fldArtists) " +
+            string strInsertCDClassical = "INSERT INTO CDClassical (fldUPC, fldLabel, fldArtists) " +
                 "VALUES(" + UPC + ", '" + label + "', '" + artists + "' );";
             OleDbConnection myConnection = new OleDbConnection(strConnection);
             OleDbCommand myCommand = new OleDbCommand(strInsertCDClassical, myConnection);
@@ -199,7 +199,7 @@ namespace BookCDDVDShop.Classes
             }
             catch (OleDbException ex)
             {
-                MessageBox.Show("There was an Insert CDCLassical error: " + ex.Message,
+                MessageBox.Show("There was an Insert CDClassical error: " + ex.Message,
                     "CDClassical Insert Failed", MessageBoxButtons.OK);
                 return false; // returns false if Insert was unsuccessful
             }
@@ -456,7 +456,7 @@ namespace BookCDDVDShop.Classes
         public OleDbDataReader SelectProductFromCDClassical(int ProductUPC,
             out bool OKFlag, out string fieldsFound)
         {
-            // string strSelectProduct = "SELECT * FROM CDClassical WHERE CDCLassical.fldUPC = " + ProductUPC;
+            // string strSelectProduct = "SELECT * FROM CDClassical WHERE CDClassical.fldUPC = " + ProductUPC;
             string strSelectProduct = "SELECT Product.fldUPC, Product.fldPrice, Product.fldTitle, Product.fldQuantity, Product.fldProductType, "
                 + "CDClassical.fldLabel, CDClassical.fld.Artists FROM Product"
                 + "INNER JOIN CDClassical ON CDClassical.fldUPC = Product.fldUPC  "
@@ -497,7 +497,7 @@ namespace BookCDDVDShop.Classes
 
             fieldsFound = dbStringProduct + dbStringCDClassical;
             MessageBox.Show("CDClassical Found ..." + Environment.NewLine
-                + fieldsFound, "Show Found CDCLassical", MessageBoxButtons.OK);
+                + fieldsFound, "Show Found CDClassical", MessageBoxButtons.OK);
             return myDataReader;
         }  // end SelectProductFromCDClassical
 
