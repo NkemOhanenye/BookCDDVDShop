@@ -63,7 +63,7 @@ namespace BookCDDVDShop.Classes
         public override void Display(frmBookCDDVDShop f)
         {
             base.Display(f);
-            f.txtCDChamberInstrumentList.Text = hiddenConductor;
+            f.txtCDOrchestraConductor.Text = hiddenConductor;
         }  // end Display
 
 
