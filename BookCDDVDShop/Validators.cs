@@ -9,7 +9,7 @@
 //
 // Last Modified by: Nkem Ohanenye, Tracy Lan
 //
-// Date: April 14, 2020
+// Date: May 3, 2020
 
 using System;
 using System.Collections.Generic;
@@ -82,6 +82,12 @@ namespace BookCDDVDShop.Classes
                 return false;
             }
 
+            // removes the if it was entered, it will be added later
+            if (price[0] == '$')
+            {
+                price = price.Remove(0); 
+            }
+
             // using Regex to validate the Product price text box to contain only digits and can only have 2 decimal points
             if (!System.Text.RegularExpressions.Regex.IsMatch(price, @"^[0-9]\d{0,2}(\.\d{1,2})?$"))
             {
@@ -89,6 +95,7 @@ namespace BookCDDVDShop.Classes
                     "Regex Product price Error");
                 return false;
             } // end Product price Regex test
+
             if (Convert.ToDecimal(price) <= 0)
             {
                 MessageBox.Show("Product price was less than 0. Re-enter.", "Product price Error");
@@ -101,11 +108,23 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateProductTitle
             (string title) // IN: Product's title (can't be blank)
         {
-            if (title == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(title, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (title == "" || count < 1)
             {
                 MessageBox.Show("Product title was blank. Re-enter.", "Product title Error");
                 return false;
             }
+
             return true; // Passed all tests
         } // end Validate ProductTitle
 
@@ -164,11 +183,11 @@ namespace BookCDDVDShop.Classes
                 return false;
             } // end Book ISBN Regex tests
 
-            /*if (ISBNLeft[0] == '0' || ISBNRight[0] == '0')
+            if (ISBNLeft[0] == '0')
             {
-                MessageBox.Show("Book ISBN was began with a 0. Re-enter.", "Book ISBN Error");
+                MessageBox.Show("Book ISBNLeft was began with a 0. Re-enter.", "Book ISBN Error");
                 return false;
-            }*/
+            }
             return true; // passed all tests
         } // end Validate BookISBN
 
@@ -176,11 +195,41 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateBookAuthor
             (string author) // IN: Book Author (cant be empty nor a digit)
         {
-            if (author == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(author, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (author == "" || count < 1)
             {
                 MessageBox.Show("Book author was blank. Re-enter.", "Book author Error");
                 return false;
             }
+
+            if (count >= 2 && !author.Contains(" "))
+            {
+                MessageBox.Show("Book Author words need to be seperated by a space. Re-enter.", "Book author Error");
+                return false;
+            }
+
+            if (author.Length <= 2)
+            {
+                MessageBox.Show("Book author was less than or equal to 2 characters. Re-enter.", "Book author Error");
+                return false;
+            }
+
+            // using Regex to validate if the author contains invalid characters
+            if (!System.Text.RegularExpressions.Regex.IsMatch(author, @"^[a-zA-Z-]"))
+            {
+                MessageBox.Show("Book author contains invalid characters. Re-enter.", "Book author Error");
+                return false;
+            } // end Book Author Regex tests
 
             return true; // passed all tests
         } // end Validate BookuAuthor
@@ -247,11 +296,42 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateDVDLeadActor
             (string leadActor) // IN: DVD leadActor (cant be empty, seperated by spaces)
         {
-            if (leadActor == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(leadActor, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (leadActor == "" || count < 1)
             {
                 MessageBox.Show("DVD leadActor was blank. Re-enter.", "DVD leadActor Error");
                 return false;
             }
+
+            if (count >= 2 && !leadActor.Contains(" "))
+            {
+                MessageBox.Show("DVD lead actor words need to be seperated by a space. Re-enter.", "DVD leadActor Error");
+                return false;
+            }
+
+            if (leadActor.Length <= 2)
+            {
+                MessageBox.Show("DVD lead actor was less than or equal to 2 characters. Re-enter.", "DVD lead actor Error");
+                return false;
+            }
+
+            // using Regex to validate if the leadActor contains invalid characters
+            if (!System.Text.RegularExpressions.Regex.IsMatch(leadActor, @"^[a-zA-Z-]"))
+            {
+                MessageBox.Show("DVD lead actor contains invalid characters. Re-enter.", "DVD leadActor Error");
+                return false;
+            } // end DVD Lead Actor Regex tests
+
             return true; // passed all tests
         } // end Validate DVDLeadActor
 
@@ -321,7 +401,18 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateCDClassicalLabel
             (string label) // IN: label (needs to be a sequence of one or more words)
         {
-            if (label == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(label, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (label == "" || count < 1)
             {
                 MessageBox.Show("CDClassical label was blank. Re-enter.", "CDClassical label Error");
                 return false;
@@ -333,18 +424,43 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateCDClassicalArtists
             (string artists) // IN: artists (cant be empty and are seperated by spaces)
         {
-            if (artists == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(artists, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (artists == "" || count < 1)
             {
                 MessageBox.Show("CDClassical artists was blank. Re-enter.", "CDClassical artists Error");
                 return false;
             }
-            // using Regex to validate that the artists contains no digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(artists, @"^[0-9]"))
+
+            if (count >= 2 && !artists.Contains(" "))
             {
-                MessageBox.Show("CDClassical artists can't contain digits. Reenter.",
+                MessageBox.Show("CDClassical artists words need to be seperated by a space. Re-enter.", "CDClassical artists Error");
+                return false;
+            }
+
+            if (artists.Length <= 2)
+            {
+                MessageBox.Show("CDClassical artists was less than or equal to 2 characters. Re-enter.", "CDClassical artists Error");
+                return false;
+            }
+
+            // using Regex to validate that the artists contains no invalid characters
+            if (!System.Text.RegularExpressions.Regex.IsMatch(artists, @"^[a-zA-Z,]"))
+            {
+                MessageBox.Show("CDClassical artists contains invalid characters. Reenter.",
                     "Regex CDClassical artists Error");
                 return false;
             } // end CDClassical artists Regex test
+
             return true; // passed all tests 
         } // end Valicate CDClassicalArtists
 
@@ -362,18 +478,43 @@ namespace BookCDDVDShop.Classes
         public static bool ValidateCDOrchestralConductor
             (string conductor)  // IN: conductor (cannot be empty and seperated by spaces, last name can have hypen)
         {
-            if (conductor == "")
+            string pattern = "[^\\w]"; // gets all spaces and other sentence endings
+            // puts all the words into an array
+            string[] words = System.Text.RegularExpressions.Regex.Split(conductor, pattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+            int count = 0;
+
+            // used to count how many words were placed in the array
+            for (int i = words.GetLowerBound(0); i <= words.GetUpperBound(0); i++)
+            {
+                count = count + 1;
+            }
+
+            if (conductor == "" || count < 1)
             {
                 MessageBox.Show("CDOrchestral conductor was blank. Re-enter.", "CDOrchestral conductor Error");
                 return false;
             }
-            // using Regex to validate that the conductor contains no digits
-            if (System.Text.RegularExpressions.Regex.IsMatch(conductor, @"^[0-9]"))
+
+            if (count >= 2 && !conductor.Contains(" "))
             {
-                MessageBox.Show("CDOrchestral conductor can't contain digits. Reenter.",
+                MessageBox.Show("CDClassical conductor words need to be seperated by a space. Re-enter.", "CDClassical conductor Error");
+                return false;
+            }
+
+            if (conductor.Length <= 2)
+            {
+                MessageBox.Show("CDClassical conductor was less than or equal to 2 characters. Re-enter.", "CDClassical conductor Error");
+                return false;
+            }
+
+            // using Regex to validate that the conductor contains valid characters
+            if (System.Text.RegularExpressions.Regex.IsMatch(conductor, @"^[a-zA-Z-]"))
+            {
+                MessageBox.Show("CDOrchestral conductor can't contain invalid characters. Reenter.",
                     "Regex CDOrchestral conductor Error");
                 return false;
             } // end Product title Regex test
+
             return true; // passed all tests
         } // end Validate CDOrchestralConductor
 
@@ -389,7 +530,7 @@ namespace BookCDDVDShop.Classes
 
         // Valicate CDChamberInstruments
         public static bool ValidateCDChamberInstrumentsList
-            (string instruments) // IN: instruments list (seperated between commas)
+            (string instruments) // IN: instruments Dropdown list (seperated between commas)
         {
             if (instruments == "")
             {
