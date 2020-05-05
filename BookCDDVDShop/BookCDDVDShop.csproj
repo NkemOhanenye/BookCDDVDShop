@@ -63,7 +63,11 @@
     <Compile Include="FormController.cs" />
     <Compile Include="Classes\Product.cs" />
     <Compile Include="Classes\SFManager.cs" />
-    <Compile Include="Globals.cs" />
+    <Compile Include="ProductDBDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductDBDataSet.xsd</DependentUpon>
+    </Compile>
     <Compile Include="Validators.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -79,6 +83,17 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ProductDBDataSet.xsc">
+      <DependentUpon>ProductDBDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="ProductDBDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ProductDBDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="ProductDBDataSet.xss">
+      <DependentUpon>ProductDBDataSet.xsd</DependentUpon>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

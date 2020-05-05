@@ -115,7 +115,7 @@ namespace BookCDDVDShop.Classes
         {
             string s = base.ToString() + "\n";
             s += "DVD Lead Actor:\t\t" + hiddenLeadActor + "\n";
-            s += "DVD Release Date:\t\t" + hiddenReleaseDate + "\n";
+            s += "DVD Release Date:\t\t" + hiddenReleaseDate.ToShortDateString() + "\n";
             s += "DVD Runtime:\t\t" + hiddenRuntime;
             return s;
         }  // end ToString
