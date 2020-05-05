@@ -389,7 +389,7 @@ namespace BookCDDVDShop
 
                 // all data is valid so new CDChamber object created and saved to Database
                 dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
-                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CD Chamber");
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CDChamber");
                 dbFunctions.InsertCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
                     txtCDClassicalArtists.Text);
                 dbFunctions.InsertCDChamber(Convert.ToInt32(txtProductUPC.Text), txtCDChamberInstrumentList.Text);
@@ -459,7 +459,7 @@ namespace BookCDDVDShop
 
                 // all data is valid so new CDOrchestra object created and saved to Database
                 dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
-                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CD Orchestra");
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "CDOrchestra");
                 dbFunctions.InsertCDClassical(Convert.ToInt32(txtProductUPC.Text), txtCDClassicalLabel.Text,
                     txtCDClassicalArtists.Text);
                 dbFunctions.InsertCDOrchestra(Convert.ToInt32(txtProductUPC.Text), txtCDOrchestraConductor.Text);
@@ -615,7 +615,7 @@ namespace BookCDDVDShop
                 // all data is valid so new BookCIS object created and saved to Database
                 string ISBN = txtBookISBNLeft.Text + txtBookISBNRight.Text;
                 dbFunctions.InsertProduct(Convert.ToInt32(txtProductUPC.Text), Convert.ToDecimal(txtProductPrice.Text),
-                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "Book CIS");
+                    txtProductTitle.Text, Convert.ToInt32(txtProductQuantity.Text), "BookCIS");
                 dbFunctions.InsertBook(Convert.ToInt32(txtProductUPC.Text), Convert.ToInt32(ISBN),
                     txtBookAuthor.Text, Convert.ToInt32(txtBookPages.Text));
                 dbFunctions.InsertBookCIS(Convert.ToInt32(txtProductUPC.Text), txtBookCISCISArea.Text);
@@ -744,7 +744,7 @@ namespace BookCDDVDShop
             //  pstring will hold the attributes of a product from the database in a single string, separated by newline characters
             //  split it below 
 
-     /*       OleDbDataReader odb = dbFunctions.SelectProductFromProduct(Convert.ToInt32(txtProductUPC.Text), out found, out pstring);
+            OleDbDataReader odb = dbFunctions.SelectProductFromProduct(Convert.ToInt32(txtProductUPC.Text), out found, out pstring);
 
             if (!found) //not found
             {
@@ -757,12 +757,12 @@ namespace BookCDDVDShop
             {
                 MessageBox.Show("Product was found in the database.", "Product Found");
                 string[] attributes = pstring.Split('\n'); // splits product attributes into array
-
+                
                 for (int i = 0; i < attributes.Length; i++)
                 {
                     attributes[i] = attributes[i].Trim('\r'); // clears "junk" from each field
                 }
-
+                
                 string pType = attributes[4]; // gets the product type from this attribute and then creates new product to display in form
 
                 if (pType == "DVD")
@@ -783,7 +783,7 @@ namespace BookCDDVDShop
                     p.Display(this);
                     txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
                 }
-                else if (pType == "Book CIS")
+                else if (pType == "BookCIS")
                 {
                     string ISBN = attributes[5];
                     string leftISBN = ISBN.Substring(0, 3);        //starts at index 0, has a length of three characters
@@ -794,14 +794,14 @@ namespace BookCDDVDShop
                     p.Display(this);
                     txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
                 }
-                else if (pType == "CD Chamber")
+                else if (pType == "CDChamber")
                 {
                     p = new CDChamber(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
                         Convert.ToInt32(attributes[3]), attributes[5], attributes[6], attributes[7]);
                     p.Display(this);
                     txtProductUPC.Enabled = false;   // to prevent user from changing the UPC when editing
                 }
-                else if (pType == "CD Orchestra")
+                else if (pType == "CDOrchestra")
                 {
                     p = new CDOrchestra(Convert.ToInt32(attributes[0]), Convert.ToDecimal(attributes[1]), attributes[2],
                         Convert.ToInt32(attributes[3]), attributes[5], attributes[6], attributes[7]);
@@ -814,7 +814,7 @@ namespace BookCDDVDShop
                     txtProductUPC.Text = "";
                     txtProductUPC.Focus();
                 } 
-            } */
+            } 
         }
 
 

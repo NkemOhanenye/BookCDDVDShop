@@ -20,7 +20,9 @@
  * 
  * Last Modified by: Nkem Ohanenye, Tracy Lan at suggestion by Andrew Dembofsky
  * 
- * Date: May 3, 2020
+ * Fixed errors for Select statements for BookCIS, CDChamber and CDOrchestra (also do search for CDCHAMBER and change it to CDChamber)
+ * 
+ * Date: May 5, 2020
  * 
  */
 
@@ -521,6 +523,7 @@ namespace BookCDDVDShop.Classes
             OleDbCommand myCommand = new OleDbCommand(strSelectProduct, myConnection);
             OleDbDataReader myDataReader;
             string dbStringProduct = "";
+            string dbStringCDClassical = "";
             string dbStringCDChamber = "";
 
             try
@@ -537,6 +540,9 @@ namespace BookCDDVDShop.Classes
                 dbStringProduct = dbStringProduct + myDataReader["fldQuantity"].ToString() + Environment.NewLine;
                 dbStringProduct = dbStringProduct + myDataReader["fldProductType"].ToString() + Environment.NewLine;
 
+                dbStringCDClassical = dbStringCDClassical + myDataReader["fldLabel"].ToString() + Environment.NewLine;
+                dbStringCDClassical = dbStringCDClassical + myDataReader["fldArtists"].ToString() + Environment.NewLine;
+
                 dbStringCDChamber = dbStringCDChamber + myDataReader["fldInstrumentList"].ToString() + Environment.NewLine;
             }
             catch (OleDbException ex)
@@ -549,7 +555,7 @@ namespace BookCDDVDShop.Classes
                 myDataReader = null;
             }
 
-            fieldsFound = dbStringProduct + dbStringCDChamber;
+            fieldsFound = dbStringProduct + dbStringCDClassical + dbStringCDChamber;
             MessageBox.Show("CDChamber Found ..." + Environment.NewLine
                 + fieldsFound, "Show Found CDChamber", MessageBoxButtons.OK);
 
@@ -576,6 +582,7 @@ namespace BookCDDVDShop.Classes
             OleDbCommand myCommand = new OleDbCommand(strSelectProduct, myConnection);
             OleDbDataReader myDataReader;
             string dbStringProduct = "";
+            string dbStringCDClassical = "";
             string dbStringCDOrchestra = "";
 
             try
@@ -592,6 +599,9 @@ namespace BookCDDVDShop.Classes
                 dbStringProduct = dbStringProduct + myDataReader["fldQuantity"].ToString() + Environment.NewLine;
                 dbStringProduct = dbStringProduct + myDataReader["fldProductType"].ToString() + Environment.NewLine;
 
+                dbStringCDClassical = dbStringCDClassical + myDataReader["fldLabel"].ToString() + Environment.NewLine;
+                dbStringCDClassical = dbStringCDClassical + myDataReader["fldArtists"].ToString() + Environment.NewLine;
+
                 dbStringCDOrchestra = dbStringCDOrchestra + myDataReader["fldConductor"].ToString() + Environment.NewLine;
             }
             catch (OleDbException ex)
@@ -604,7 +614,7 @@ namespace BookCDDVDShop.Classes
                 myDataReader = null;
             }
 
-            fieldsFound = dbStringProduct + dbStringCDOrchestra;
+            fieldsFound = dbStringProduct + dbStringCDClassical + dbStringCDOrchestra;
             MessageBox.Show("CDOrchestra Found ..." + Environment.NewLine
                 + fieldsFound, "Show Found CDOrchestra", MessageBoxButtons.OK);
             return myDataReader;
@@ -661,7 +671,7 @@ namespace BookCDDVDShop.Classes
 
             fieldsFound = dbStringProduct + dbStringDVD;
             MessageBox.Show("DVD Found ..." + Environment.NewLine
-                + dbStringProduct, "Show Found DVD", MessageBoxButtons.OK);
+                + fieldsFound, "Show Found DVD", MessageBoxButtons.OK);
             return myDataReader;
         } // end SelectProductFromDVD
 
@@ -684,6 +694,7 @@ namespace BookCDDVDShop.Classes
             OleDbCommand myCommand = new OleDbCommand(strSelectProduct, myConnection);
             OleDbDataReader myDataReader;
             string dbStringProduct = "";
+            string dbStringBook = "";
             string dbStringBookCIS = "";
 
             try
@@ -693,8 +704,6 @@ namespace BookCDDVDShop.Classes
                 if (myDataReader.HasRows == false) OKFlag = false;
                 else OKFlag = true; // returns true if Select was successful
 
-                myDataReader = null;
-
                 myDataReader.Read();
                 dbStringProduct = myDataReader["fldUPC"].ToString() + Environment.NewLine;
                 dbStringProduct = dbStringProduct + myDataReader["fldPrice"].ToString() + Environment.NewLine;
@@ -702,20 +711,25 @@ namespace BookCDDVDShop.Classes
                 dbStringProduct = dbStringProduct + myDataReader["fldQuantity"].ToString() + Environment.NewLine;
                 dbStringProduct = dbStringProduct + myDataReader["fldProductType"].ToString() + Environment.NewLine;
 
+                dbStringBook = dbStringBook + myDataReader["fldISBN"].ToString() + Environment.NewLine;
+                dbStringBook = dbStringBook + myDataReader["fldAuthor"].ToString() + Environment.NewLine;
+                dbStringBook = dbStringBook + myDataReader["fldPages"].ToString() + Environment.NewLine;
+
                 dbStringBookCIS = dbStringBookCIS + myDataReader["fldCISArea"].ToString() + Environment.NewLine;
             }
             catch (OleDbException ex)
             {
                 MessageBox.Show("There was a Select Product from BookCIS error: " + ex.Message,
                     "Select BookCIS Failed", MessageBoxButtons.OK);
+
+                myDataReader = null;
                 myConnection.Close();
                 OKFlag = false; // returns false if Select was unsuccessful
-                myDataReader = null;
             }
 
-            fieldsFound = dbStringProduct + dbStringBookCIS;
+            fieldsFound = dbStringProduct + dbStringBook + dbStringBookCIS;
             MessageBox.Show("BookCIS Found ..." + Environment.NewLine
-                + dbStringProduct, "Show Found BookCIS", MessageBoxButtons.OK);
+                + fieldsFound, "Show Found BookCIS", MessageBoxButtons.OK);
             return myDataReader;
         } // end SelectProductFromCBookCIS
 
