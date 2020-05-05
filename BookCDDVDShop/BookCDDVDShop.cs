@@ -643,7 +643,7 @@ namespace BookCDDVDShop
             {
                 // Set up form for DVDForm processing; will change button text to "Save DVD" so that this button 
                 // can be clicked again and this handler can be used again for saving data at the end if everything is valid
-                displayDVDForm();
+                displayDVDForm();  
             }
             else
             {
@@ -744,7 +744,7 @@ namespace BookCDDVDShop
             //  pstring will hold the attributes of a product from the database in a single string, separated by newline characters
             //  split it below 
 
-     /*       OleDbDataReader odb = dbFunctions.SelectProductFromProduct(Convert.ToInt32(txtProductUPC.Text), out found, out pstring);
+            OleDbDataReader odb = dbFunctions.SelectProductFromProduct(Convert.ToInt32(txtProductUPC.Text), out found, out pstring);
 
             if (!found) //not found
             {
@@ -814,7 +814,7 @@ namespace BookCDDVDShop
                     txtProductUPC.Text = "";
                     txtProductUPC.Focus();
                 } 
-            } */
+            } 
         }
 
 
@@ -831,7 +831,7 @@ namespace BookCDDVDShop
             if (result == DialogResult.Yes)
             {
                 // The found item is deleted from the database
-              //  dbFunctions.Delete(Convert.ToInt32(txtProductUPC.Text));
+                dbFunctions.Delete(Convert.ToInt32(txtProductUPC.Text));
 
                 thisProductList.removeItem(currentIndex);
                 recordsProcessedCount++;
