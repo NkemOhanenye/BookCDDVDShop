@@ -9,7 +9,7 @@
 //
 // Last Modified by: Nkem Ohanenye, Tracy Lan
 //
-// Date: May 3, 2020
+// Date: May 5, 2020
 
 using System;
 using System.Collections.Generic;
@@ -368,13 +368,13 @@ namespace BookCDDVDShop.Classes
                 DateTime date = Convert.ToDateTime(releaseDate);
                 if (date.Year < 1980 || (date.Year == 2019 && date.Month == 12 && date.Day == 31) || date.Year > 2019)
                 {
-                    MessageBox.Show("DVD releaseDate not valid. Date must be after 1980 and before 2020. Re-enter.", "DVD Release Date Error");
+                    MessageBox.Show("DVD releaseDate not valid (mm/dd/yyyy). Date must be after 1980 and before 2020. Re-enter.", "DVD Release Date Error");
                     return false;
                 }
             }
             catch
             {
-                MessageBox.Show("DVD releaseDate was not a valid date. Re-enter.", "DVD Release Date Error");
+                MessageBox.Show("DVD releaseDate was not a valid date (mm/dd/yyyy). Re-enter.", "DVD Release Date Error");
                 return false;
             }
             return true; // passed all tests

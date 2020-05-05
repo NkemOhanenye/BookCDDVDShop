@@ -1,4 +1,11 @@
-﻿// Product Class
+﻿/*Modified by:
+ * Nkem Ohanenye, Tracy Lan
+ * CIS 3309 Section 001
+ * Date: 5/3/2020
+ * BookCDDVDShop - Product class
+ */
+
+// Product Class
 // Responsible for all processing related to a Product
 
 // Written in VB by Joseph Jupin     Fall 2009

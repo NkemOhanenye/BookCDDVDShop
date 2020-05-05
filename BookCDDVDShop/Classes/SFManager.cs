@@ -1,4 +1,11 @@
-﻿// Serializable File (Persistent Object)  Class 
+﻿/*Modified by:
+ * Nkem Ohanenye, Tracy Lan
+ * CIS 3309 Section 001
+ * Date: 5/4/2020
+ * BookCDDVDShop - SFManager class
+ */
+
+// Serializable File (Persistent Object)  Class 
 // Responsible for all processing related to a Serializable File
 // Written in VB by Joseph Jupin     Fall 2009
 // Converted to CSharp by Frank Friedman   Ver 3  Spring 2016

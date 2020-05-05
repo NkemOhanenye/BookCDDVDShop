@@ -21,6 +21,7 @@
  * Last Modified by: Nkem Ohanenye, Tracy Lan at suggestion by Andrew Dembofsky
  * 
  * Fixed errors for Select statements for BookCIS, CDChamber and CDOrchestra (also do search for CDCHAMBER and change it to CDChamber)
+ * When Updating the Product, Book, DVD, CDClassical were missing '' and ,
  * 
  * Date: May 5, 2020
  * 
@@ -745,8 +746,9 @@ namespace BookCDDVDShop.Classes
         public bool UpdateProduct(int UPC, decimal price, string title, int quantity)
         {
             string strUpdateProduct = "UPDATE Product SET " +
-                                     "fldUPC = " + UPC + "fldPrice = " + price + " fldTitle = '" + title + "' fldQuantity = " + quantity +
-                                     " WHERE fldUPC = " + UPC;  // Update Product record that matches the UPC
+                                     "fldUPC = '" + UPC + "', fldPrice = '" + price + "', fldTitle = '" + title + 
+                                     "', fldQuantity = '" + quantity + "' " +
+                                     "WHERE fldUPC = " + UPC;  // Update Product record that matches the UPC
 
             OleDbConnection myConnection = new OleDbConnection(strConnection);
             OleDbCommand myCommand = new OleDbCommand(strUpdateProduct, myConnection);
@@ -772,7 +774,7 @@ namespace BookCDDVDShop.Classes
         public bool UpdateBook(int UPC, int ISBN, string author, int pages)
         {
             string strUpdateFaculty = "UPDATE Book SET " +
-                                    "fldISBN = " + ISBN + " fldAuthor = '" + author + "' fldPages = " + pages +
+                                    "fldISBN = '" + ISBN + "', fldAuthor = '" + author + "', fldPages = '" + pages + "' "+
                                     "WHERE fldUPC = " + UPC;
 
             OleDbConnection myConnection = new OleDbConnection(strConnection);
@@ -826,8 +828,8 @@ namespace BookCDDVDShop.Classes
         public bool UpdateDVD(int UPC, string leadActor, DateTime releaseDate, int runTime)
         {
             string strUpdateFaculty = "UPDATE DVD SET " +
-                                    "fldUPC = " + UPC + " fldLeadActor = '" + leadActor + "' fldReleaseDate = " +
-                                    releaseDate + "fldRunTime = " + runTime +
+                                    "fldUPC = '" + UPC + "', fldLeadActor = '" + leadActor + "', fldReleaseDate = '" +
+                                    releaseDate + "', fldRunTime = '" + runTime + "' "+
                                     "WHERE fldUPC = " + UPC;
 
             OleDbConnection myConnection = new OleDbConnection(strConnection);
@@ -853,8 +855,9 @@ namespace BookCDDVDShop.Classes
         public bool UpdateCDClassical(int UPC, string label, string artist)
         {
             // string strUpdateCDClassical = "SELECT * FROM CDClassical WHERE CDClassical.CDClassicalID = " + ProductUPC; // string select statement
-            string strUpdateCDClassical = "UPDATE CDClassical SET fldLabel = '" + label + "' , fldArtist = '" + artist + "'" +
-                                       " WHERE fldUPC = " + UPC;
+            string strUpdateCDClassical = "UPDATE CDClassical SET " + 
+                                        "fldLabel = '" + label + "', fldArtists = '" + artist + "' " +
+                                       "WHERE fldUPC = " + UPC;
 
             OleDbConnection myConnection = new OleDbConnection(strConnection);
             OleDbCommand myCommand = new OleDbCommand(strUpdateCDClassical, myConnection);

@@ -143,8 +143,6 @@ namespace BookCDDVDShop
             {
                 btnDelete.Enabled = false;
                 btnEdit.Enabled = false;
-                // btnToString.Enabled = false;
-                // lblUserMessage.Text = "Please select an operation";
             }
             else if (i < 0 || i >= thisProductList.Count())
             {
@@ -155,10 +153,6 @@ namespace BookCDDVDShop
             {
                 currentIndex = i;
                 thisProductList.getAnItem(currentIndex).Display(this);
-                // lblUserMessage.Text = "Object Type: " +
-                //  thisProductList.getAnItem(i).GetType().ToString() +
-                //" List Index: " + i.ToString();
-                // btnFind.Enabled = true;
                 btnDelete.Enabled = true;
                 btnEdit.Enabled = true;
             }  // end else
@@ -185,7 +179,6 @@ namespace BookCDDVDShop
                     {
                         // sets currentIndex to the index where the found product is located in the list
                         currentIndex = thisProductList.getProductList.IndexOf(p);
-                        // displayRelevantFormPart(p);
                     }
 
                     return true;
@@ -216,14 +209,17 @@ namespace BookCDDVDShop
         // Checks to see if there are duplicate ISBNs
         private bool lookForDuplicateISBN(int givenISBNLeft, int givenISBNRight)
         {
-            foreach (Book b in thisProductList.getProductList)
+            foreach (Product p in thisProductList.getProductList)
             {
-                if (b.BookISBNLeft == givenISBNLeft && b.BookISBNRight == givenISBNRight)
+                if (p.GetType() == typeof(Book) || p.GetType() == typeof(BookCIS))
                 {
-                    // dublicate found
-                    return true;
-                }
-            }
+                    if (((Book)p).BookISBNLeft == givenISBNLeft && ((Book)p).BookISBNRight == givenISBNRight)
+                    {
+                        // dublicate found
+                        return true;
+                    }
+                } // end outer if
+            } // end loop
             // no duplicate
             return false;
         }
@@ -370,7 +366,6 @@ namespace BookCDDVDShop
                     return;
                 }
                 // Save if data is OK
-                // if (ValidateProduct() == false) return;
                 if (Validators.ValidateCDClassical(txtCDClassicalLabel.Text, txtCDClassicalArtists.Text) == false)
                 {
                     txtCDClassicalLabel.Text = "";
@@ -440,7 +435,6 @@ namespace BookCDDVDShop
                     return;
                 }
                 // Save if data is OK
-                // if (ValidateProduct() == false) return;
                 if (Validators.ValidateCDClassical(txtCDClassicalLabel.Text, txtCDClassicalArtists.Text) == false)
                 {
                     txtCDClassicalLabel.Text = "";

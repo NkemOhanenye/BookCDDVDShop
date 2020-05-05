@@ -1,4 +1,11 @@
-﻿// Classical CD Class
+﻿/*Modified by:
+ * Nkem Ohanenye, Tracy Lan
+ * CIS 3309 Section 001
+ * Date: 5/4/2020
+ * BookCDDVDShop - CDClassical class
+ */
+
+// Classical CD Class
 // This node is inherited by the Classical Orchestra CD and Classical Chamber Music CD classes
 // Responsible for all processing related to a Classical Music CD
 
